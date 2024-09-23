@@ -3,8 +3,8 @@
 ## 월(240923)
 
 - [x] 구조 설계 후 `architecture.md`에 기록하기
-- [ ] net 모듈 사용하여 서버 구성하기
-- [ ] 서버의 모든 Request를 winston 통해 로깅하기
+- [x] net 모듈 사용하여 서버 구성하기
+- [x] 서버의 모든 Request를 winston 통해 로깅하기
 - [ ] 디자인 참고하여 index 파일 작성하기
 - [ ] index.html의 요청이 들어오면 index.html파일을 response로 전달하기
 
