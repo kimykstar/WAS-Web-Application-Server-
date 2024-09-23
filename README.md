@@ -6,7 +6,7 @@
 - [x] net 모듈 사용하여 서버 구성하기
 - [x] 서버의 모든 Request를 winston 통해 로깅하기
 - [ ] 디자인 참고하여 index 파일 작성하기
-- [ ] index.html의 요청이 들어오면 index.html파일을 response로 전달하기
+- [x] index.html의 요청이 들어오면 index.html파일을 response로 전달하기
 
 ## 화(240924)
 
@@ -35,15 +35,15 @@
 
 ## 기능요구사항
 
-- [ ] 로컬로 HTTP Request 내용 출력
-  - [ ] 서버로 들어오는 HTTP Request 내용을 winston 이용해 출력
-- [ ] 정적 html 파일 응답
-  - [ ] `/index.html`로 요청 시 해당 파일 반환하기
-- [ ] HTTP GET 요청에서 URI 추출
-  - [ ] HTTP GET 요청의 Request Line에서 URI 추출, 해당 정보 활용
-- [ ] 정적 파일 응답 구현
-  - [ ] static 폴더를 만들고 해당 폴더 파일들을 GET으로 요청 시 그대로 응답할 수 있도록 구현
-  - [ ] URI에 해당하는 파일 없을 경우 404 리턴
+- [x] 로컬로 HTTP Request 내용 출력
+  - [x] 서버로 들어오는 HTTP Request 내용을 winston 이용해 출력
+- [x] 정적 html 파일 응답
+  - [x] `/index.html`로 요청 시 해당 파일 반환하기
+- [x] HTTP GET 요청에서 URI 추출
+  - [x] HTTP GET 요청의 Request Line에서 URI 추출, 해당 정보 활용
+- [x] 정적 파일 응답 구현
+  - [x] static 폴더를 만들고 해당 폴더 파일들을 GET으로 요청 시 그대로 응답할 수 있도록 구현
+  - [x] URI에 해당하는 파일 없을 경우 404 리턴
 - [ ] 컨텐츠 타입 지원
   - [ ] html, css, js, ico, png, jpg에 대해 지원해줄 것
 - [ ] GET으로 회원가입 기능 구현
@@ -52,9 +52,9 @@
 
 ## 프로그래밍 요구사항
 
-- [ ] net 모듈 사용 HTTP 응답
-  - [ ] node.js의 net 모듈을 이용해 HTTP GET에 응답하는 웹서버 구현
-  - [ ] http 모듈은 사용하지 않음
+- [x] net 모듈 사용 HTTP 응답
+  - [x] node.js의 net 모듈을 이용해 HTTP GET에 응답하는 웹서버 구현
+  - [x] http 모듈은 사용하지 않음
 - [x] 구조 설계
   - [x] 좋은 구조가 되도록 설계 후 구현 시작하기
   - [x] 설계 내용을 `architecture.md`에 기록
