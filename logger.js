@@ -8,6 +8,7 @@ const logFormat = printf(({ level, message, label, timestamp }) => {
 
 const logger = winston.createLogger({
   format: combine(timestamp({ format: "YYYYMMDD" }), logFormat),
+  level: "http",
   transports: [new winston.transports.Console()],
 });
 
