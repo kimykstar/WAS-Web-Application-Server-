@@ -2,7 +2,7 @@ const net = require("net");
 const fs = require("fs");
 const { getUriFromRequest } = require("./requestParser.js");
 const { logger } = require("./logger.js");
-const { processURI } = require("./uriProcessor.js");
+const { getResourceByUri } = require("./uriProcessor.js");
 const {
   createOkResponse,
   createNotfoundResponse,
@@ -16,7 +16,7 @@ const server = net.createServer((socket) => {
     const uri = getUriFromRequest(request);
 
     try {
-      const responseBody = processURI(uri);
+      const responseBody = getResourceByUri(uri);
       const response = createOkResponse(responseBody);
       socket.write(response);
       socket.end();
