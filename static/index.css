@@ -1,0 +1,40 @@
+body {
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #4362d0;
+  padding: 40px;
+  border-radius: 8px;
+  height: 148px;
+  margin-top: 40px;
+}
+
+.signupBtn {
+  background-color: #4362d0;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 16px;
+}
+
+.info > p {
+  color: #d2dae0;
+  font-size: 16px;
+}
+
+.info > h3 {
+  color: white;
+  font-size: 24px;
+}
