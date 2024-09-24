@@ -16,8 +16,8 @@ const server = net.createServer((socket) => {
     const uri = getUriFromRequest(request);
 
     try {
-      const responseBody = getResourceByUri(uri);
-      const response = createOkResponse(responseBody);
+      const [responseBody, fileExtension] = getResourceByUri(uri);
+      const response = createOkResponse(responseBody, fileExtension);
       socket.write(response);
       socket.end();
     } catch (e) {
