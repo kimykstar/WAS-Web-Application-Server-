@@ -1,8 +1,8 @@
 const net = require("net");
 const fs = require("fs");
-const { parseURI } = require("./uriParser.js");
+const { getUriFromRequest } = require("./requestParser.js");
 const { logger } = require("./logger.js");
-const { processURI } = require("./uriProcessor.js");
+const { getResourceByUri } = require("./uriProcessor.js");
 const {
   createOkResponse,
   createNotfoundResponse,
@@ -13,11 +13,11 @@ const server = net.createServer((socket) => {
   socket.on("data", (data) => {
     const request = data.toString();
     logger.http(request);
-    const uri = parseURI(request);
+    const uri = getUriFromRequest(request);
 
     try {
-      const responseBody = processURI(uri);
-      const response = createOkResponse(responseBody);
+      const [responseBody, fileExtension] = getResourceByUri(uri);
+      const response = createOkResponse(responseBody, fileExtension);
       socket.write(response);
       socket.end();
     } catch (e) {
@@ -33,6 +33,4 @@ const server = net.createServer((socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log("HTTP server running on port 3000");
-});
+module.exports = { server };

@@ -1,15 +1,18 @@
 const fs = require("fs");
 const { NotFoundUriException } = require("./CustomException.js");
 
-const processURI = (uri) => {
+const getResourceByUri = (uri) => {
   if (uri === "/") {
-    return fs.readFileSync("./static/index.html", "utf-8");
+    return [fs.readFileSync("./static/index.html"), "HTML"];
   }
 
   const filename = uri.substring(1);
 
   if (getStaticFileNames().includes(filename)) {
-    return fs.readFileSync(`./static/${filename}`, "utf-8");
+    const content = fs.readFileSync(`./static/${filename}`);
+    const fileExtension = filename.split(".")[1];
+
+    return [content, fileExtension];
   }
 
   throw new NotFoundUriException();
@@ -19,4 +22,4 @@ const getStaticFileNames = () => {
   return fs.readdirSync("./static");
 };
 
-module.exports = { processURI };
+module.exports = { getResourceByUri };

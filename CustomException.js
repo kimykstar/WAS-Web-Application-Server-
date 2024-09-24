@@ -15,4 +15,14 @@ class NotFoundUriException extends CustomException {
   }
 }
 
-module.exports = { CustomException, NotFoundUriException };
+class UnsupportedMimeTypeException extends CustomException {
+  constructor() {
+    super(400, "지원되지 않는 MIME 타입입니다.");
+  }
+}
+
+module.exports = {
+  CustomException,
+  NotFoundUriException,
+  UnsupportedMimeTypeException,
+};
