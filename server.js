@@ -1,6 +1,6 @@
 const net = require("net");
 const fs = require("fs");
-const { parseURI } = require("./uriParser.js");
+const { getUriFromRequest } = require("./requestParser.js");
 const { logger } = require("./logger.js");
 const { processURI } = require("./uriProcessor.js");
 const {
@@ -13,7 +13,7 @@ const server = net.createServer((socket) => {
   socket.on("data", (data) => {
     const request = data.toString();
     logger.http(request);
-    const uri = parseURI(request);
+    const uri = getUriFromRequest(request);
 
     try {
       const responseBody = processURI(uri);
