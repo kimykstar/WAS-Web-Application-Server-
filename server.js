@@ -33,6 +33,4 @@ const server = net.createServer((socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log("HTTP server running on port 3000");
-});
+module.exports = { server };
