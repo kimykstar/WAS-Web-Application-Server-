@@ -1,3 +1,5 @@
+const {DuplicateApiException} = require("./exception/LogicException");
+
 class Router {
   #apis = {
     GET: new Map(),
@@ -7,9 +9,13 @@ class Router {
     const getApis = this.#apis.GET;
 
     if (getApis.has(uriRegex)) {
-      throw new Error();
+      throw new DuplicateApiException("GET", uriRegex);
     }
 
     getApis.set(uriRegex, controller);
   }
 }
+
+const router = new Router();
+
+module.exports = { router }
