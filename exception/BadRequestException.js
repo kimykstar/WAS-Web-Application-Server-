@@ -1,6 +1,5 @@
-const { StatusCodes } = require("http-status-codes");
-
-class CustomException extends Error {}
+const {StatusCodes} = require("http-status-codes");
+const {CustomException} = require("./CustomException");
 
 class BadRequestException extends CustomException {
   #statusCode;
@@ -23,10 +22,7 @@ class BadRequestException extends CustomException {
 
 class NotFoundUriException extends BadRequestException {
   constructor() {
-    super(
-      StatusCodes.NOT_FOUND,
-      "해당하는 uri에 대한 리소스를 찾을 수 없습니다."
-    );
+    super(StatusCodes.NOT_FOUND, "해당하는 uri에 대한 리소스를 찾을 수 없습니다.");
   }
 }
 

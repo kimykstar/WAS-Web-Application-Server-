@@ -7,7 +7,7 @@ const {
   createOkResponse,
   createResponseByBadRequest,
 } = require("./responseCreator.js");
-const { BadRequestException } = require("./CustomException.js");
+const { BadRequestException } = require("./exception/BadRequestException.js");
 
 const server = net.createServer((socket) => {
   socket.on("data", (data) => {

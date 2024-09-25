@@ -1,6 +1,6 @@
 const { StatusCodes, getReasonPhrase } = require("http-status-codes");
 
-const { UnsupportedMimeTypeException } = require("./CustomException.js");
+const { UnsupportedMimeTypeException } = require("./exception/BadRequestException.js");
 
 const MIME = Object.freeze({
   HTML: "text/html",

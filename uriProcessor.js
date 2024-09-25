@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { NotFoundUriException } = require("./CustomException.js");
+const { NotFoundUriException } = require("./exception/BadRequestException.js");
 
 const getResourceByUri = (uri) => {
   if (uri === "/") {
