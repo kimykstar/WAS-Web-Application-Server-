@@ -3,6 +3,7 @@ const { StatusCodes, getReasonPhrase } = require("http-status-codes");
 const { UnsupportedMimeTypeException } = require("./exception/BadRequestException.js");
 
 const MIME = Object.freeze({
+  TEXT_UTF8: "text/plain;charset=UTF-8",
   HTML: "text/html",
   CSS: "text/css",
   JS: "text/javascript",
@@ -43,7 +44,7 @@ const createOkResponse = (responseBody, fileExtension) => {
 };
 
 const createResponseByBadRequest = (statusCode, message) => {
-  return [createResponseStatusLine(statusCode), CRLF].join("");
+  return [createResponseStatusLine(statusCode), createContentType("TEXT_UTF8"), CRLF, message].join("");
 };
 
 module.exports = { createOkResponse, createResponseByBadRequest };
