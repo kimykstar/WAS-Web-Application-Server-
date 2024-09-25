@@ -1,18 +1,21 @@
 const {DuplicateApiException} = require("./exception/LogicException");
 
+export type Method = "GET" | "POST";
+
 class Router {
-  private readonly apis: Record<string, Map<string, RegExp>> = {
+  private readonly apis: Record<Method, Map<RegExp, Function>> = {
     GET: new Map(),
+    POST: new Map(),
   };
 
-  get(uriRegex, controller) {
-    const getApis = this.apis.GET;
+  addController(method: Method, uriRegex: RegExp, controller: Function) {
+    const api = this.apis[method];
 
-    if (getApis.has(uriRegex)) {
-      throw new DuplicateApiException("GET", uriRegex);
+    if (api.has(uriRegex)) {
+      throw new DuplicateApiException(method, uriRegex);
     }
 
-    getApis.set(uriRegex, controller);
+    api.set(uriRegex, controller);
   }
 }
 
