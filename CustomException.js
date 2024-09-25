@@ -1,4 +1,8 @@
-class CustomException extends Error {
+const { StatusCodes } = require("http-status-codes");
+
+class CustomException extends Error {}
+
+class BadRequestException extends CustomException {
   #statusCode;
   #message;
 
@@ -7,22 +11,33 @@ class CustomException extends Error {
     this.#statusCode = statusCode;
     this.#message = message;
   }
-}
 
-class NotFoundUriException extends CustomException {
-  constructor() {
-    super(404, "해당하는 uri에 대한 리소스를 찾을 수 없습니다.");
+  getStatusCode() {
+    return this.#statusCode;
+  }
+
+  getMessage() {
+    return this.#message;
   }
 }
 
-class UnsupportedMimeTypeException extends CustomException {
+class NotFoundUriException extends BadRequestException {
   constructor() {
-    super(400, "지원되지 않는 MIME 타입입니다.");
+    super(
+      StatusCodes.NOT_FOUND,
+      "해당하는 uri에 대한 리소스를 찾을 수 없습니다."
+    );
+  }
+}
+
+class UnsupportedMimeTypeException extends BadRequestException {
+  constructor() {
+    super(StatusCodes.UNSUPPORTED_MEDIA_TYPE, "지원되지 않는 MIME 타입입니다.");
   }
 }
 
 module.exports = {
-  CustomException,
+  BadRequestException,
   NotFoundUriException,
   UnsupportedMimeTypeException,
 };
