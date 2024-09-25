@@ -1,7 +1,7 @@
 const fs = require("fs");
-const { NotFoundUriException } = require("./CustomException.js");
+const { NotFoundUriException } = require("./exception/BadRequestException.ts");
 
-const getResourceByUri = (uri) => {
+const getResourceByUri = (uri: string) => {
   if (uri === "/") {
     return [fs.readFileSync("./static/index.html"), "HTML"];
   }
