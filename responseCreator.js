@@ -1,9 +1,6 @@
-const { UnsupportedMimeTypeException } = require("./CustomException.js");
+const { StatusCodes, getReasonPhrase } = require("http-status-codes");
 
-const RESPONSE = Object.freeze({
-  OK: "200 OK",
-  NotFound: "404 Not Found",
-});
+const { UnsupportedMimeTypeException } = require("./CustomException.js");
 
 const MIME = Object.freeze({
   HTML: "text/html",
@@ -16,8 +13,8 @@ const MIME = Object.freeze({
 
 const CRLF = "\r\n";
 
-const createResponseStatusLine = (status) => {
-  return `HTTP/1.1 ${RESPONSE[status]}\r\n`;
+const createResponseStatusLine = (statusCode) => {
+  return `HTTP/1.1 ${statusCode} ${getReasonPhrase(statusCode)}\r\n`;
 };
 
 const createContentType = (fileExtension) => {
@@ -32,7 +29,7 @@ const createContentType = (fileExtension) => {
 
 const createHeader = (fileExtension) => {
   const headerText = [
-    createResponseStatusLine("OK"),
+    createResponseStatusLine(StatusCodes.OK),
     createContentType(fileExtension),
     CRLF,
   ].join("");
@@ -45,8 +42,8 @@ const createOkResponse = (responseBody, fileExtension) => {
   return Buffer.concat([header, responseBody]);
 };
 
-const createNotfoundResponse = () => {
-  return [createResponseStatusLine("NotFound"), CRLF].join("");
+const createResponseByBadRequest = (statusCode, message) => {
+  return [createResponseStatusLine(statusCode), CRLF].join("");
 };
 
-module.exports = { createOkResponse, createNotfoundResponse };
+module.exports = { createOkResponse, createResponseByBadRequest };

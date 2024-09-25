@@ -5,9 +5,9 @@ const { logger } = require("./logger.js");
 const { getResourceByUri } = require("./uriProcessor.js");
 const {
   createOkResponse,
-  createNotfoundResponse,
+  createResponseByBadRequest,
 } = require("./responseCreator.js");
-const { NotFoundUriException } = require("./CustomException.js");
+const { BadRequestException } = require("./CustomException.js");
 
 const server = net.createServer((socket) => {
   socket.on("data", (data) => {
@@ -21,8 +21,11 @@ const server = net.createServer((socket) => {
       socket.write(response);
       socket.end();
     } catch (e) {
-      if (e instanceof NotFoundUriException) {
-        const response = createNotfoundResponse();
+      if (e instanceof BadRequestException) {
+        const response = createResponseByBadRequest(
+          e.getStatusCode(),
+          e.getMessage()
+        );
         socket.write(response);
         socket.end();
         return;
