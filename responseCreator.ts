@@ -1,8 +1,8 @@
 const { StatusCodes, getReasonPhrase } = require("http-status-codes");
 
-const { UnsupportedMimeTypeException } = require("./exception/BadRequestException.js");
+const { UnsupportedMimeTypeException } = require("./exception/BadRequestException.ts");
 
-const MIME = Object.freeze({
+const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;charset=UTF-8",
   HTML: "text/html",
   CSS: "text/css",
@@ -14,11 +14,11 @@ const MIME = Object.freeze({
 
 const CRLF = "\r\n";
 
-const createResponseStatusLine = (statusCode) => {
+const createResponseStatusLine = (statusCode: number) => {
   return `HTTP/1.1 ${statusCode} ${getReasonPhrase(statusCode)}\r\n`;
 };
 
-const createContentType = (fileExtension) => {
+const createContentType = (fileExtension: string) => {
   const mimeType = MIME[fileExtension.toUpperCase()];
 
   if (mimeType === undefined) {
@@ -28,7 +28,7 @@ const createContentType = (fileExtension) => {
   return `Content-Type: ${mimeType}\r\n`;
 };
 
-const createHeader = (fileExtension) => {
+const createHeader = (fileExtension: string): Buffer => {
   const headerText = [
     createResponseStatusLine(StatusCodes.OK),
     createContentType(fileExtension),
@@ -38,12 +38,12 @@ const createHeader = (fileExtension) => {
   return Buffer.from(headerText);
 };
 
-const createOkResponse = (responseBody, fileExtension) => {
+const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
   const header = createHeader(fileExtension);
   return Buffer.concat([header, responseBody]);
 };
 
-const createResponseByBadRequest = (statusCode, message) => {
+const createResponseByBadRequest = (statusCode: number, message: string) => {
   return [createResponseStatusLine(statusCode), createContentType("TEXT_UTF8"), CRLF, message].join("");
 };
 

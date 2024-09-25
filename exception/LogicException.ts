@@ -1,20 +1,20 @@
 const {CustomException} = require("./CustomException");
 
-class LogicException extends CustomException {
-  #message;
+abstract class LogicException extends CustomException {
+  private readonly message: string;
 
-  constructor(message) {
+  protected constructor(message: string) {
     super();
-    this.#message = message;
+    this.message = message;
   }
 
-  getMessage() {
-    return this.#message;
+  getMessage(): string {
+    return this.message;
   }
 }
 
 class DuplicateApiException extends LogicException {
-  constructor(method, uriRegex) {
+  constructor(method: string, uriRegex: RegExp) {
     super(`[${method} ${uriRegex}] api가 중복되었습니다. 확인해주세요.`);
   }
 }

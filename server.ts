@@ -1,16 +1,15 @@
 const net = require("net");
-const fs = require("fs");
-const { getUriFromRequest } = require("./requestParser.js");
+const { getUriFromRequest } = require("./requestParser.ts");
 const { logger } = require("./logger.js");
-const { getResourceByUri } = require("./uriProcessor.js");
+const { getResourceByUri } = require("./uriProcessor");
 const {
   createOkResponse,
   createResponseByBadRequest,
-} = require("./responseCreator.js");
-const { BadRequestException } = require("./exception/BadRequestException.js");
+} = require("./responseCreator.ts");
+const { BadRequestException } = require("./exception/BadRequestException.ts");
 
-const server = net.createServer((socket) => {
-  socket.on("data", (data) => {
+const server = net.createServer((socket: any) => {
+  socket.on("data", (data: string) => {
     const request = data.toString();
     logger.http(request);
     const uri = getUriFromRequest(request);
@@ -20,7 +19,7 @@ const server = net.createServer((socket) => {
       const response = createOkResponse(responseBody, fileExtension);
       socket.write(response);
       socket.end();
-    } catch (e) {
+    } catch (e: any) {
       if (e instanceof BadRequestException) {
         const response = createResponseByBadRequest(
           e.getStatusCode(),

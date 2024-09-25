@@ -1,22 +1,22 @@
 const {StatusCodes} = require("http-status-codes");
 const {CustomException} = require("./CustomException");
 
-class BadRequestException extends CustomException {
-  #statusCode;
-  #message;
+abstract class BadRequestException extends CustomException {
+  private readonly statusCode: number;
+  private readonly message: string;
 
-  constructor(statusCode, message) {
+  protected constructor(statusCode: number, message: string) {
     super();
-    this.#statusCode = statusCode;
-    this.#message = message;
+    this.statusCode = statusCode;
+    this.message = message;
   }
 
-  getStatusCode() {
-    return this.#statusCode;
+  getStatusCode(): number {
+    return this.statusCode;
   }
 
-  getMessage() {
-    return this.#message;
+  getMessage(): string {
+    return this.message;
   }
 }
 
