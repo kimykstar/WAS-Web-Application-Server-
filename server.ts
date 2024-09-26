@@ -1,17 +1,16 @@
 import net from "net";
-import {getUriFromRequest} from "./requestParser";
-import {logger} from "./logger";
-import {getResourceByUri} from "./uriProcessor";
-import {createOkResponse, createResponseByBadRequest} from "./responseCreator";
-import {BadRequestException} from "./exception/BadRequestException";
-
+import { getUriFromRequest } from "./requestParser";
+import { logger } from "./logger";
+import { getResourceByUri } from "./uriProcessor";
+import { createOkResponse, createResponseByBadRequest } from "./responseCreator";
+import { BadRequestException } from "./exception/BadRequestException";
+import "./controller/userController";
 
 export const server = net.createServer((socket: any) => {
   socket.on("data", (data: string) => {
     const request = data.toString();
     logger.http(request);
     const uri = getUriFromRequest(request);
-
     try {
       const [responseBody, fileExtension] = getResourceByUri(uri);
       const response = createOkResponse(responseBody, fileExtension);

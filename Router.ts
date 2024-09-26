@@ -1,4 +1,4 @@
-import {DuplicateApiException} from "./exception/LogicException";
+import { DuplicateApiException } from "./exception/LogicException";
 
 export type Method = "GET" | "POST";
 
@@ -8,14 +8,22 @@ class Router {
     POST: new Map(),
   };
 
-  addController(method: Method, uriRegex: RegExp, controller: Function) {
-    const api = this.apis[method];
+  addApi(method: Method, uriRegex: RegExp, api: Function) {
+    const apis = this.apis[method];
 
-    if (api.has(uriRegex)) {
+    if (apis.has(uriRegex)) {
       throw new DuplicateApiException(method, uriRegex);
     }
 
-    api.set(uriRegex, controller);
+    apis.set(uriRegex, api);
+  }
+
+  findApi(uri: string) {
+    for (const [uriRegex, api] of this.apis.GET.entries()) {
+      if (uriRegex.test(uri)) {
+        return api;
+      }
+    }
   }
 }
 
