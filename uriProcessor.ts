@@ -1,7 +1,8 @@
-const fs = require("fs");
-const { NotFoundUriException } = require("./exception/BadRequestException.ts");
+import fs from "fs";
+import { NotFoundUriException } from "./exception/BadRequestException.ts";
+import { router } from "./Router.ts";
 
-const getResourceByUri = (uri: string) => {
+export const getResourceByUri = (uri: string, queryParams?: Record<string, string>): [Buffer, string] => {
   if (uri === "/") {
     return [fs.readFileSync("./static/index.html"), "HTML"];
   }
@@ -15,11 +16,16 @@ const getResourceByUri = (uri: string) => {
     return [content, fileExtension];
   }
 
+  const api = router.getApi(uri);
+
+  if (api) {
+    // uri에 대한 parameter들을 추출하고 api()메서드에 전달
+    return [api(queryParams), "TEXT_UTF8"];
+  }
+
   throw new NotFoundUriException();
 };
 
 const getStaticFileNames = () => {
   return fs.readdirSync("./static");
 };
-
-module.exports = { getResourceByUri };
