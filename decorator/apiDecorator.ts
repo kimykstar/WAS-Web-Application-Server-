@@ -1,5 +1,5 @@
-import { InvalidRegexException } from "../exception/LogicException";
-import { router, Method } from "../Router";
+import { InvalidRegexException } from "../exception/LogicException.ts";
+import { router, Method } from "../Router.ts";
 
 const URI_VALID_REGEX = /^(\/[^\/]+)+/;
 

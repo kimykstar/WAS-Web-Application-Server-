@@ -1,10 +1,10 @@
 import net from "net";
-import { getUriFromRequest } from "./requestParser";
-import { logger } from "./logger";
-import { getResourceByUri } from "./uriProcessor";
-import { createOkResponse, createResponseByBadRequest } from "./responseCreator";
-import { BadRequestException } from "./exception/BadRequestException";
-import "./controller/userController";
+import { getUriFromRequest } from "./requestParser.ts";
+import { logger } from "./logger.ts";
+import { getResourceByUri } from "./uriProcessor.ts";
+import { createOkResponse, createResponseByBadRequest } from "./responseCreator.ts";
+import { BadRequestException } from "./exception/BadRequestException.ts";
+import "./controller/userController.ts";
 
 export const server = net.createServer((socket: any) => {
   socket.on("data", (data: string) => {

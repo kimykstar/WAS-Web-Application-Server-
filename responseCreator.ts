@@ -1,5 +1,5 @@
-import {getReasonPhrase, StatusCodes} from "http-status-codes";
-import {UnsupportedMimeTypeException} from "./exception/BadRequestException";
+import { getReasonPhrase, StatusCodes } from "http-status-codes";
+import { UnsupportedMimeTypeException } from "./exception/BadRequestException.ts";
 
 const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;charset=UTF-8",
@@ -28,11 +28,7 @@ const createContentType = (fileExtension: string) => {
 };
 
 const createHeader = (fileExtension: string): Buffer => {
-  const headerText = [
-    createResponseStatusLine(StatusCodes.OK),
-    createContentType(fileExtension),
-    CRLF,
-  ].join("");
+  const headerText = [createResponseStatusLine(StatusCodes.OK), createContentType(fileExtension), CRLF].join("");
 
   return Buffer.from(headerText);
 };

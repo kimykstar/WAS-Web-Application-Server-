@@ -1,5 +1,5 @@
-import {StatusCodes} from "http-status-codes";
-import {CustomException} from "./CustomException";
+import { StatusCodes } from "http-status-codes";
+import { CustomException } from "./CustomException.ts";
 
 export abstract class BadRequestException extends CustomException {
   private readonly statusCode: number;
