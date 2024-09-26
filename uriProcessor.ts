@@ -2,7 +2,7 @@ import fs from "fs";
 import { NotFoundUriException } from "./exception/BadRequestException";
 import { router } from "./Router";
 
-export const getResourceByUri = (uri: string): [Buffer, string] => {
+export const getResourceByUri = (uri: string, queryParams?: Record<string, string>): [Buffer, string] => {
   if (uri === "/") {
     return [fs.readFileSync("./static/index.html"), "HTML"];
   }
@@ -16,10 +16,11 @@ export const getResourceByUri = (uri: string): [Buffer, string] => {
     return [content, fileExtension];
   }
 
-  const api = router.findApi(uri);
+  const api = router.getApi(uri);
 
   if (api) {
-    return [api(), "TEXT_UTF8"];
+    // uri에 대한 parameter들을 추출하고 api()메서드에 전달
+    return [api(queryParams), "TEXT_UTF8"];
   }
 
   throw new NotFoundUriException();

@@ -10,9 +10,9 @@ export const server = net.createServer((socket: any) => {
   socket.on("data", (data: string) => {
     const request = data.toString();
     logger.http(request);
-    const uri = getUriFromRequest(request);
+    const [uri, queryParams] = getUriFromRequest(request);
     try {
-      const [responseBody, fileExtension] = getResourceByUri(uri);
+      const [responseBody, fileExtension] = getResourceByUri(uri, queryParams);
       const response = createOkResponse(responseBody, fileExtension);
       socket.write(response);
       socket.end();

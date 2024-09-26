@@ -3,12 +3,12 @@ import { DuplicateApiException } from "./exception/LogicException";
 export type Method = "GET" | "POST";
 
 class Router {
-  private readonly apis: Record<Method, Map<RegExp, Function>> = {
+  private readonly apis: Record<Method, Map<RegExp, (queryParams?: Record<string, string>) => Buffer>> = {
     GET: new Map(),
     POST: new Map(),
   };
 
-  addApi(method: Method, uriRegex: RegExp, api: Function) {
+  addApi(method: Method, uriRegex: RegExp, api: (queryParams?: Record<string, string>) => Buffer) {
     const apis = this.apis[method];
 
     if (apis.has(uriRegex)) {
@@ -18,7 +18,7 @@ class Router {
     apis.set(uriRegex, api);
   }
 
-  findApi(uri: string) {
+  getApi(uri: string) {
     for (const [uriRegex, api] of this.apis.GET.entries()) {
       if (uriRegex.test(uri)) {
         return api;
