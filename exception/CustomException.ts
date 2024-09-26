@@ -1,4 +1,5 @@
-abstract class CustomException extends Error {
+export abstract class CustomException extends Error {
+    protected constructor(message: string) {
+        super(message);
+    }
 }
-
-module.exports = { CustomException };

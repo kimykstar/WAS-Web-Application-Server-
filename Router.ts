@@ -1,4 +1,4 @@
-const {DuplicateApiException} = require("./exception/LogicException");
+import {DuplicateApiException} from "./exception/LogicException";
 
 export type Method = "GET" | "POST";
 
@@ -19,6 +19,4 @@ class Router {
   }
 }
 
-const router = new Router();
-
-module.exports = { router }
+export const router = new Router();

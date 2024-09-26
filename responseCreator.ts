@@ -1,6 +1,5 @@
-const { StatusCodes, getReasonPhrase } = require("http-status-codes");
-
-const { UnsupportedMimeTypeException } = require("./exception/BadRequestException.ts");
+import {getReasonPhrase, StatusCodes} from "http-status-codes";
+import {UnsupportedMimeTypeException} from "./exception/BadRequestException";
 
 const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;charset=UTF-8",
@@ -38,13 +37,11 @@ const createHeader = (fileExtension: string): Buffer => {
   return Buffer.from(headerText);
 };
 
-const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
+export const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
   const header = createHeader(fileExtension);
   return Buffer.concat([header, responseBody]);
 };
 
-const createResponseByBadRequest = (statusCode: number, message: string) => {
+export const createResponseByBadRequest = (statusCode: number, message: string) => {
   return [createResponseStatusLine(statusCode), createContentType("TEXT_UTF8"), CRLF, message].join("");
 };
-
-module.exports = { createOkResponse, createResponseByBadRequest };

@@ -1,7 +1,7 @@
-const fs = require("fs");
-const { NotFoundUriException } = require("./exception/BadRequestException.ts");
+import fs from "fs";
+import {NotFoundUriException} from "./exception/BadRequestException";
 
-const getResourceByUri = (uri: string) => {
+export const getResourceByUri = (uri: string): [Buffer, string] => {
   if (uri === "/") {
     return [fs.readFileSync("./static/index.html"), "HTML"];
   }
@@ -21,5 +21,3 @@ const getResourceByUri = (uri: string) => {
 const getStaticFileNames = () => {
   return fs.readdirSync("./static");
 };
-
-module.exports = { getResourceByUri };
