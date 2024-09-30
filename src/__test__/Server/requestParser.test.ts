@@ -1,7 +1,7 @@
 import { getUriFromRequest } from "../../server/requestParser.ts";
 
 describe("URI Parsing", () => {
-  it("쿼리 스트링이 없는 경우", () => {
+  it("No querystring test", () => {
     const mockRequest = "GET / HTTP/1.1\n";
 
     const [url, params] = getUriFromRequest(mockRequest);
@@ -9,7 +9,7 @@ describe("URI Parsing", () => {
     expect(params).toEqual({});
   });
 
-  it("쿼리 스트링이 있는 경우", () => {
+  it("Existing querystring test", () => {
     const mockRequest = "GET /login?userId=1122";
 
     const [url, params] = getUriFromRequest(mockRequest);
