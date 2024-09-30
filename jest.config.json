@@ -1,0 +1,17 @@
+{
+  "testEnvironment": "ts-node",
+  "bail": 1,
+  "verbose": true,
+  "projects": [
+    {
+      "displayName": "Dom test",
+      "testEnvironment": "jsdom",
+      "testMatch": ["<rootDir>/__test__/Dom/**/*.test.ts"]
+    },
+    {
+      "displayName": "ts Test",
+      "testEnvironment": "ts-node",
+      "testMatch": ["<rootDir>/__test__/Server/**/*.test.ts"]
+    }
+  ]
+}
