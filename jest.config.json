@@ -6,12 +6,12 @@
     {
       "displayName": "Dom test",
       "testEnvironment": "jsdom",
-      "testMatch": ["<rootDir>/__test__/Dom/**/*.test.ts"]
+      "testMatch": ["<rootDir>/src/__test__/Dom/**/*.test.ts"]
     },
     {
       "displayName": "ts Test",
-      "testEnvironment": "ts-node",
-      "testMatch": ["<rootDir>/__test__/Server/**/*.test.ts"]
+      "testEnvironment": "node",
+      "testMatch": ["<rootDir>/src/__test__/Server/**/*.test.ts"]
     }
   ]
 }
