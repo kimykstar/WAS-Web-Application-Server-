@@ -5,13 +5,12 @@
     {
       "displayName": "Dom test",
       "testEnvironment": "jsdom",
-      "testMatch": ["<rootDir>/src/__test__/Dom/**/*.test.ts"]
+      "testMatch": ["<rootDir>/src/__test__/Dom/*.test.ts"]
     },
     {
-      "preset": "ts-jest",
-      "displayName": "ts Test",
-      "testEnvironment": "node",
-      "testMatch": ["<rootDir>/src/__test__/Server/**/*.test.ts"]
+      "preset": "ts-jest/presets/default-esm",
+      "displayName": "TS test",
+      "testMatch": ["<rootDir>/src/__test__/Server/**/*.test.ts", "<rootDir>/src/__test__/*.test.ts"]
     }
   ]
 }
