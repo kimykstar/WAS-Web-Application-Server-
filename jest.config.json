@@ -1,5 +1,4 @@
 {
-  "testEnvironment": "ts-node",
   "bail": 1,
   "verbose": true,
   "projects": [
@@ -9,6 +8,7 @@
       "testMatch": ["<rootDir>/src/__test__/Dom/**/*.test.ts"]
     },
     {
+      "preset": "ts-jest",
       "displayName": "ts Test",
       "testEnvironment": "node",
       "testMatch": ["<rootDir>/src/__test__/Server/**/*.test.ts"]
