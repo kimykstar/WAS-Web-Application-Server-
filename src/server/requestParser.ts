@@ -4,7 +4,7 @@ export const getUriFromRequest = (request: string): [string, Record<string, stri
   const [httpMethod, uri, httpVersion] = requestLine.split(" ");
 
   if (!uri.includes("?")) {
-    return [uri];
+    return [uri, {}];
   }
 
   const [url, queryString] = uri.split("?");
