@@ -1,5 +1,5 @@
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
-import { UnsupportedMimeTypeException } from "./exception/BadRequestException.ts";
+import { UnsupportedMimeTypeException } from "../exception/BadRequestException.ts";
 
 const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;charset=UTF-8",

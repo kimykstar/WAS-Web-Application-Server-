@@ -1,5 +1,5 @@
 import fs from "fs";
-import { NotFoundUriException } from "./exception/BadRequestException.ts";
+import { NotFoundUriException } from "../exception/BadRequestException.ts";
 import { router } from "./Router.ts";
 
 export const getResourceByUri = (uri: string, queryParams?: Record<string, string>): [Buffer, string] => {

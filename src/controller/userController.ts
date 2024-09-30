@@ -1,5 +1,5 @@
 import { getMapping } from "../decorator/apiDecorator.ts";
-import { lowdbDao } from "../DB/LowdbDao.ts";
+import { lowdbDao } from "../../DB/LowdbDao.ts";
 import { User } from "../domain/User.ts";
 
 class UserController {

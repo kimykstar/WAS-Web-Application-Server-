@@ -1,4 +1,4 @@
-import { DuplicateApiException } from "./exception/LogicException.ts";
+import { DuplicateApiException } from "../exception/LogicException.ts";
 
 export type Method = "GET" | "POST";
 
