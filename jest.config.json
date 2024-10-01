@@ -5,7 +5,10 @@
     {
       "displayName": "Dom test",
       "testEnvironment": "jsdom",
-      "testMatch": ["<rootDir>/src/__test__/Dom/*.test.ts"]
+      "testMatch": ["<rootDir>/src/__test__/Dom/*.test.ts"],
+      "transform": {
+        "^.+\\.tsx?$": ["ts-jest", { "useESM": true }]
+      }
     },
     {
       "preset": "ts-jest/presets/default-esm",
