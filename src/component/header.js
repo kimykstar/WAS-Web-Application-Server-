@@ -3,7 +3,7 @@ class Header {
   #body;
 
   constructor() {
-    this.#container = document.createElement(header);
+    this.#container = document.createElement("header");
     this.#container.setAttribute('class', 'navbar');
     this.#body = `
       <div>HELLO, WEB!</div>
