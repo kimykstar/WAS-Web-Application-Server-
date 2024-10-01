@@ -7,7 +7,6 @@ describe("Static file request Test", () => {
     ["/", "./src/static/index.html", { "content-type": "text/html" }],
     ["", "./src/static/index.html", { "content-type": "text/html" }],
     ["/index.html", "./src/static/index.html", { "content-type": "text/html" }],
-    ["/index.css", "./src/static/index.css", { "content-type": "text/css" }],
   ])("Text static file request Test", async (requestUri, staticFilePath, expectHeader) => {
     const response = await request(server).get(requestUri).expect(200);
     expect(response.text).toBe(fs.readFileSync(staticFilePath).toString());

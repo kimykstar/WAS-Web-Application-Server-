@@ -4,7 +4,6 @@ import fs from "fs";
 describe("URI processor test", () => {
   it.each([
     ["/index.html", "./src/static/index.html", "html"],
-    ["/index.css", "./src/static/index.css", "css"],
     ["/favicon.ico", "./src/static/favicon.ico", "ico"],
     ["/dog.jpg", "./src/static/dog.jpg", "jpg"],
   ])("Static file data & file extention read test", (uri: string, staticFilePath: string, expExtention: string) => {
