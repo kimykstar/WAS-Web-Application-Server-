@@ -1,17 +1,19 @@
 class Header {
-  #template;
+  #container;
+  #body;
 
   constructor() {
-    this.#template = `
-      <header class="navbar">
-        <div>HELLO, WEB!</div>
-        <button type="button" class="signupBtn">로그인/회원가입</button>
-      </header>
+    this.#container = document.createElement(header);
+    this.#container.setAttribute('class', 'navbar');
+    this.#body = `
+      <div>HELLO, WEB!</div>
+      <button type="button" class="signupBtn">로그인/회원가입</button>
     `;
+    this.#container.innerHTML = this.#body;
   }
 
-  getTemplate() {
-    return this.#template;
+  getHeader() {
+    return this.#container;
   }
 }
 
