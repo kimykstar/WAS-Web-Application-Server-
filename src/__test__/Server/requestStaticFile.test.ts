@@ -3,51 +3,23 @@ import request from "supertest";
 import fs from "fs";
 
 describe("Static file request Test", () => {
-  it("Index file request Test", async () => {
-    const response = await request(server).get("/").expect(200);
-    expect(response.text).toBe(fs.readFileSync("./src/static/index.html").toString());
-    expect(response.headers).toEqual({
-      "content-type": "text/html",
-    });
+  it.each([
+    ["/", "./src/static/index.html", { "content-type": "text/html" }],
+    ["", "./src/static/index.html", { "content-type": "text/html" }],
+    ["/index.html", "./src/static/index.html", { "content-type": "text/html" }],
+    ["/index.css", "./src/static/index.css", { "content-type": "text/css" }],
+  ])("Text static file request Test", async (requestUri, staticFilePath, expectHeader) => {
+    const response = await request(server).get(requestUri).expect(200);
+    expect(response.text).toBe(fs.readFileSync(staticFilePath).toString());
+    expect(response.headers).toEqual(expectHeader);
   });
 
-  it("None path request Test", async () => {
-    const response = await request(server).get("").expect(200);
-    expect(response.text).toBe(fs.readFileSync("./src/static/index.html").toString());
-    expect(response.headers).toEqual({
-      "content-type": "text/html",
-    });
-  });
-
-  it("Static file path request Test", async () => {
-    const response = await request(server).get("/index.html").expect(200);
-    expect(response.text).toBe(fs.readFileSync("./src/static/index.html").toString());
-    expect(response.headers).toEqual({
-      "content-type": "text/html",
-    });
-  });
-
-  it("CSS file path request Test", async () => {
-    const response = await request(server).get("/index.css").expect(200);
-    expect(response.text).toBe(fs.readFileSync("./src/static/index.css").toString());
-    expect(response.headers).toEqual({
-      "content-type": "text/css",
-    });
-  });
-
-  it("jpg file path request Test", async () => {
-    const response = await request(server).get("/dog.jpg").expect(200);
-    expect(response.header).toEqual({
-      "content-type": "image/jpeg",
-    });
-    expect(response.body).toEqual(fs.readFileSync("./src/static/dog.jpg"));
-  });
-
-  it("ico file path request Test", async () => {
-    const response = await request(server).get("/favicon.ico").expect(200);
-    expect(response.header).toEqual({
-      "content-type": "image/vnd.microsoft.icon",
-    });
-    expect(response.body).toEqual(fs.readFileSync("./src/static/favicon.ico"));
+  it.each([
+    ["/dog.jpg", "./src/static/dog.jpg", { "content-type": "image/jpeg" }],
+    ["/favicon.ico", "./src/static/favicon.ico", { "content-type": "image/vnd.microsoft.icon" }],
+  ])("Image static file request Test", async (requestUri, staticFilePath, expectHeader) => {
+    const response = await request(server).get(requestUri).expect(200);
+    expect(response.header).toEqual(expectHeader);
+    expect(response.body).toEqual(fs.readFileSync(staticFilePath));
   });
 });
