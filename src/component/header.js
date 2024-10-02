@@ -1,20 +1,13 @@
-class Header {
-  #container;
-  #body;
+class Header extends HTMLElement{
 
-  constructor() {
-    this.#container = document.createElement("header");
-    this.#container.setAttribute('class', 'navbar');
-    this.#body = `
+  connectedCallback() {
+    this.setAttribute('class', 'navbar');
+    this.innerHTML = `
       <div>HELLO, WEB!</div>
       <button type="button" class="signupBtn">로그인/회원가입</button>
     `;
-    this.#container.innerHTML = this.#body;
   }
 
-  getHeader() {
-    return this.#container;
-  }
 }
 
-export const header = new Header();
+customElements.define('page-header', Header);
