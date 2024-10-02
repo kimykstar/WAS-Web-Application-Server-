@@ -4,9 +4,9 @@ import fs from "fs";
 
 describe("Static file request Test", () => {
   it.each([
-    ["/", "./src/static/index.html", { "content-type": "text/html" }],
-    ["", "./src/static/index.html", { "content-type": "text/html" }],
-    ["/index.html", "./src/static/index.html", { "content-type": "text/html" }],
+    ["/", "./src/static/views/index.html", { "content-type": "text/html" }],
+    ["", "./src/static/views/index.html", { "content-type": "text/html" }],
+    ["/index.html", "./src/static/views/index.html", { "content-type": "text/html" }],
   ])("Text static file request Test", async (requestUri, staticFilePath, expectHeader) => {
     const response = await request(server).get(requestUri).expect(200);
     expect(response.text).toBe(fs.readFileSync(staticFilePath).toString());
@@ -14,8 +14,8 @@ describe("Static file request Test", () => {
   });
 
   it.each([
-    ["/dog.jpg", "./src/static/dog.jpg", { "content-type": "image/jpeg" }],
-    ["/favicon.ico", "./src/static/favicon.ico", { "content-type": "image/vnd.microsoft.icon" }],
+    ["/dog.jpg", "./src/static/images/dog.jpg", { "content-type": "image/jpeg" }],
+    ["/favicon.ico", "./src/static/images/favicon.ico", { "content-type": "image/vnd.microsoft.icon" }],
   ])("Image static file request Test", async (requestUri, staticFilePath, expectHeader) => {
     const response = await request(server).get(requestUri).expect(200);
     expect(response.header).toEqual(expectHeader);

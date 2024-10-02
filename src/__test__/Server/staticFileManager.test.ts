@@ -1,4 +1,4 @@
-import { isValidExtension, isExistStaticFile, getStaticFile } from "../../server/staticFileManager.ts";
+import { isValidExtension, isExistStaticFile, getStaticFileContent } from "../../server/staticFileManager.ts";
 import fs from 'fs';
 
 describe('Static file manager test', () => {
@@ -33,7 +33,7 @@ describe('Static file manager test', () => {
     ['favicon.ico', './src/static/images/favicon.ico'],
   ])('getStaticFile func test', (fileName, filePath) => {
     const fileContent = fs.readFileSync(filePath);
-    expect(getStaticFile(fileName))
+    expect(getStaticFileContent(fileName))
       .toEqual(fileContent);
   })
 

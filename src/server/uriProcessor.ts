@@ -1,18 +1,20 @@
 import fs from "fs";
 import { NotFoundUriException } from "../exception/BadRequestException.ts";
 import { router } from "./Router.ts";
+import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./staticFileManager.ts";
+
 export const getResourceAndExtensionByUri = (uri: string, queryParams?: Record<string, string>): [Buffer, string] => {
   if (uri === "/") {
-    return [fs.readFileSync("./src/static/index.html"), "HTML"];
+    return [fs.readFileSync("./src/static/views/index.html"), "HTML"];
   }
 
-  const filename = uri.substring(1);
+  const fileName = uri.substring(1);
 
-  if (getStaticFileNames().includes(filename)) {
-    const content = fs.readFileSync(`./src/static/${filename}`);
-    const fileExtension = filename.split(".")[1];
+  if (isValidExtension(fileName) && isExistStaticFile(fileName)) {
+    const content = getStaticFileContent(fileName);
+    const [name, extension] = fileName.split(".");
 
-    return [content, fileExtension];
+    return [content, extension];
   }
 
   const api = router.getApi(uri);
@@ -23,8 +25,4 @@ export const getResourceAndExtensionByUri = (uri: string, queryParams?: Record<s
   }
 
   throw new NotFoundUriException();
-};
-
-const getStaticFileNames = () => {
-  return fs.readdirSync("./src/static");
 };

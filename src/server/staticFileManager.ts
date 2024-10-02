@@ -11,7 +11,7 @@ const STATIC_FILE_PATH: Record<string, string> = {
 Object.freeze(STATIC_FILE_PATH);
 
 // isExistStaticFile이 true인 경우 정적파일 받아오기(확장자에 따라)
-export const getStaticFile = (fileName: string): Buffer => {
+export const getStaticFileContent = (fileName: string): Buffer => {
   const [name, extension] = fileName.split('.');
   const filePath = `${STATIC_FILE_PATH[extension]}/${fileName}`
   return fs.readFileSync(filePath)
