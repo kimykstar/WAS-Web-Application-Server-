@@ -1,9 +1,9 @@
 .signupBtn {
-  background-color: #4362d0;
-  color: white;
-  border-radius: 8px;
+  background-color: var(--accent-blue);
+  color: var(--gray-50);
+  border-radius: 0.8rem;
   border: none;
-  padding: 8px 16px;
+  padding: 0.8rem 1.6rem;
 }
 
 .navbar {
@@ -11,6 +11,4 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-left: 100px;
-  margin-right: 100px;
 }

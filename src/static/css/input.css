@@ -1,0 +1,21 @@
+form-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: var(--rounded-sm);
+  border: 0.1rem solid var(--gray-500);
+  padding: 0.8rem 1.6rem;
+  margin: 1rem;
+  width: 32rem;
+}
+
+form-input > p {
+  margin: 0;
+  color: var(--gray-900);
+}
+
+form-input > input {
+  margin-top: 0.8rem;
+  color: var(--gary-500);
+  border: none;
+}

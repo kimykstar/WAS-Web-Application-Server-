@@ -1,5 +1,7 @@
+@import url(variable.css);
 @import url(page.css);
 @import url(header.css);
+@import url(input.css);
 
 .signupForm {
   display: flex;
@@ -8,11 +10,20 @@
 }
 
 .inputBox {
-  border-radius: 5px;
-  width: 320px;
-  height: 64px;
+  border-radius: var(--rounded-sm);
+  width: 32rem;
+  height: 6.4rem;
 }
 
 .signupTitle {
   text-align: center;
+}
+
+.signupFormBtn {
+  background-color: var(--accent-blue);
+  width: 32rem;
+  border: none;
+  color: var(--gray-50);
+  height: 4rem;
+  border-radius: var(--rounded-sm);
 }
