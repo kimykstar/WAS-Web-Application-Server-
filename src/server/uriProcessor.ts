@@ -2,12 +2,16 @@ import fs from "fs";
 import { NotFoundUriException } from "../exception/BadRequestException.ts";
 import { router } from "./Router.ts";
 import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./staticFileManager.ts";
-import { createOkResponse, createRedirectionResponse } from "./responseCreator.ts";
+import { createOkResponse } from "./responseCreator.ts";
 
-export const getResponseByUri = (httpMethod: string, uri: string, reqBody: Record<string, string>): Buffer => {
+export const getResponseByUri = async (
+  httpMethod: string,
+  uri: string,
+  reqBody: Record<string, string>
+): Promise<Buffer> => {
   if (uri === "/") {
-    const content = fs.readFileSync("./src/static/user/index.html")
-    return createOkResponse(content, 'HTML');
+    const content = fs.readFileSync("./src/static/user/index.html");
+    return createOkResponse(content, "HTML");
   }
 
   const fileName = uri.substring(1);
@@ -20,17 +24,15 @@ export const getResponseByUri = (httpMethod: string, uri: string, reqBody: Recor
 
   const api = router.getApi(httpMethod, uri);
 
-  if (httpMethod === 'GET' && api) {
+  if (httpMethod === "GET" && api) {
     const queryParams = queryStringToObject(uri);
     return createOkResponse(api(queryParams), "TEXT_UTF8");
-  }else if(httpMethod === 'POST' && api) {
-    api(reqBody);
-    return createRedirectionResponse('/user/index.html');
+  } else if (httpMethod === "POST" && api) {
+    return await api(reqBody);
   }
 
   throw new NotFoundUriException();
 };
-
 
 const queryStringToObject = (queryString: string) => {
   return queryString

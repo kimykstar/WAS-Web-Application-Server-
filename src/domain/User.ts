@@ -1,13 +1,11 @@
 export class User {
-  private readonly userId: string;
-  private readonly password: string;
-  private readonly name: string;
-  private readonly email: string;
+  readonly password: string;
+  readonly nickName: string;
+  readonly email: string;
 
-  constructor(userId: string, password: string, name: string, email: string) {
-    this.userId = userId;
+  constructor(password: string, nickName: string, email: string) {
     this.password = password;
-    this.name = name;
+    this.nickName = nickName;
     this.email = email;
   }
 }
