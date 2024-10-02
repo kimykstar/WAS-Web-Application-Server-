@@ -9,7 +9,7 @@ export const getResourceAndExtensionByUri = (uri: string, queryParams?: Record<s
   }
 
   const fileName = uri.substring(1);
-
+  
   if (isValidExtension(fileName) && isExistStaticFile(fileName)) {
     const content = getStaticFileContent(fileName);
     const [name, extension] = fileName.split(".");
