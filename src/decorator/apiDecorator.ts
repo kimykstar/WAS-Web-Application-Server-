@@ -1,10 +1,9 @@
 import { InvalidRegexException } from "../exception/LogicException.ts";
-import { router, Method } from "../server/Router.ts";
+import { router } from "../server/Router.ts";
 
 const URI_VALID_REGEX = /^(\/[^\/]+)+/;
 
-export const getMapping = (uri: string) => {
-  // 올바른 uri인지 검증
+export const GetMapping = (uri: string) => {
   if (!URI_VALID_REGEX.test(uri)) {
     throw new InvalidRegexException(uri);
   }
@@ -24,3 +23,14 @@ export const getMapping = (uri: string) => {
     router.addApi("GET", regExp, descriptor.value);
   };
 };
+
+
+export const PostMapping = (uri: string) => {
+  if (!URI_VALID_REGEX.test(uri)) {
+    throw new InvalidRegexException(uri);
+  }
+
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    router.addApi("POST", new RegExp(uri), descriptor.value);
+  }
+}

@@ -1,5 +1,5 @@
 import net from "net";
-import { getUriFromRequest } from "./requestParser.ts";
+import { getRequestBodyObj, getUriFromRequest } from "./requestParser.ts";
 import { logger } from "./logger.ts";
 import { getResourceAndExtensionByUri } from "./uriProcessor.ts";
 import { createOkResponse, createResponseByBadRequest } from "./responseCreator.ts";
@@ -10,9 +10,10 @@ export const server = net.createServer((socket: any) => {
   socket.on("data", (data: string) => {
     const request = data.toString();
     logger.http(request);
-    const [uri, queryParams] = getUriFromRequest(request);
+    const [httpMethod, uri] = getUriFromRequest(request); // Todo: getRequestObjectFromRequest로 변경 및 동작 변경
+    const bodyObj = getRequestBodyObj(request);
     try {
-      const [responseBody, fileExtension] = getResourceAndExtensionByUri(uri, queryParams);
+      const [responseBody, fileExtension] = getResourceAndExtensionByUri(httpMethod, uri, bodyObj);
       const response = createOkResponse(responseBody, fileExtension);
       socket.write(response);
       socket.end();

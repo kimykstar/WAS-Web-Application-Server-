@@ -3,13 +3,13 @@ import { NotFoundUriException } from "../exception/BadRequestException.ts";
 import { router } from "./Router.ts";
 import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./staticFileManager.ts";
 
-export const getResourceAndExtensionByUri = (uri: string, queryParams?: Record<string, string>): [Buffer, string] => {
+export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, reqBody: Record<string, string>): [Buffer, string] => {
   if (uri === "/") {
     return [fs.readFileSync("./src/static/views/index.html"), "HTML"];
   }
 
   const fileName = uri.substring(1);
-  
+
   if (isValidExtension(fileName) && isExistStaticFile(fileName)) {
     const content = getStaticFileContent(fileName);
     const [name, extension] = fileName.split(".");
@@ -17,12 +17,25 @@ export const getResourceAndExtensionByUri = (uri: string, queryParams?: Record<s
     return [content, extension];
   }
 
-  const api = router.getApi(uri);
+  const api = router.getApi(httpMethod, uri);
 
-  if (api) {
-    // uri에 대한 parameter들을 추출하고 api()메서드에 전달
+  if (httpMethod === 'GET' && api) {
+    const queryParams = queryStringToObject(uri);
     return [api(queryParams), "TEXT_UTF8"];
+  }else if(httpMethod === 'POST' && api) {
+    return [api(reqBody), 'TEXT_UTF8'];
   }
 
   throw new NotFoundUriException();
+};
+
+
+const queryStringToObject = (queryString: string) => {
+  return queryString
+    .split("&")
+    .map((entry) => entry.split("="))
+    .reduce((result: Record<string, string>, [key, value]) => {
+      result[key] = value;
+      return result;
+    }, {});
 };
