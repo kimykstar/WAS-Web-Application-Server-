@@ -1,0 +1,64 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+html {
+    font-size: 62.5%;
+    font-family: 'Pretendard Variable', Pretendard, sans-serif;
+    height: 100%;
+    padding: 30px;
+}
+
+:root{
+    /* Font Size */
+    --font-xs: 1.2rem;
+    --font-sm: 1.4rem;
+    --font-md: 1.6rem;
+    --font-lg: 2.4rem;
+    /* Font Weight */
+    --font-bold: 700;
+    --font-medium: 500;
+    /* Colors  */
+    --accent-blue: #4362D0;
+    --accent-red: #ff3b30; 
+    --gray-50: #fefefe;
+    --gray-100: #f7f7fc;
+    --gray-200: #eff0f6;
+    --gray-300: #d9dbe9;
+    --gray-400: #bec1d5;
+    --gray-500: #a0a3bd;
+    --gray-600: #6e7191;
+    --gray-700: #4e4b66;
+    --gray-800: #2a2a44;
+    --gray-900: #14142b;
+    /* Spacing */
+    --spacing-4: 0.4rem;
+    --spacing-8: 0.8rem;
+    --spacing-12: 1.2rem;
+    --spacing-16: 1.6rem;
+    --spacing-20: 2rem;
+    --spacing-24: 2.4rem;
+    --spacing-28: 2.8rem;
+    --spacing-32: 3.2rem;
+    --spacing-36: 3.6rem;
+    --spacing-40: 4rem;
+    --spacing-44: 4.4rem;
+    --spacing-48: 4.8rem;
+    --spacing-52: 5.2rem;
+    --spacing-56: 5.6rem;
+    --spacing-60: 6rem;
+    --spacing-64: 6.4rem;
+    --spacing-68: 6.8rem;
+    --spacing-72: 7.2rem;
+    --spacing-76: 7.6rem;
+    --spacing-80: 8rem;
+    /* Border Radius */
+    --rounded-sm: 0.8rem;
+    --rounded-md: 1.6rem;
+    --rounded-lg: 2.4rem;
+    --rounded-full: 50%;
+    /* Shoadows */
+    --shadow-floating: 0 0 4px rgba(110, 128, 145, 8%), 0 16px 16px rgba(110, 128, 145, 24%);
+    --shadow-up: 0 2px 8px rgba(110, 128, 145, 32%);
+    --shadow-normal: 0 1px 4px rgba(110, 128, 145, 24%);
+
+    --Number100: 1.6rem;
+    --Number200: 0.8rem;
+}

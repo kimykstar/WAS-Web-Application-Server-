@@ -1,3 +1,4 @@
+@import url(variable.css);
 @import url(page.css);
 @import url(header.css);
 
@@ -5,19 +6,19 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #4362d0;
-  padding: 40px;
-  border-radius: 8px;
-  height: 148px;
-  margin-top: 40px;
+  background-color: var(--accent-blue);
+  padding: 4rem;
+  border-radius: 0.8rem;
+  height: 14.8.rem;
+  margin-top: 4rem;
 }
 
 .info > p {
-  color: #d2dae0;
-  font-size: 16px;
+  color: var(--gray-50);
+  font-size: 1.6rem;
 }
 
 .info > h3 {
-  color: white;
-  font-size: 24px;
+  color: var(--gray-50);
+  font-size: 2.4rem;
 }

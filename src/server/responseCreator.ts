@@ -1,5 +1,6 @@
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
 import { UnsupportedMimeTypeException } from "../exception/BadRequestException.ts";
+import Response from '../server/Response.ts';
 
 const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;charset=UTF-8",
@@ -27,6 +28,10 @@ const createContentType = (fileExtension: string) => {
   return `Content-Type: ${mimeType}\r\n`;
 };
 
+const createHeaderAttr = (key: string, value: string) => {
+  return `${key}: ${value}\r\n`;
+}
+
 const createHeader = (fileExtension: string): Buffer => {
   const headerText = [createResponseStatusLine(StatusCodes.OK), createContentType(fileExtension), CRLF].join("");
 
@@ -41,3 +46,8 @@ export const createOkResponse = (responseBody: Buffer, fileExtension: string): B
 export const createResponseByBadRequest = (statusCode: number, message: string) => {
   return [createResponseStatusLine(statusCode), createContentType("TEXT_UTF8"), CRLF, message].join("");
 };
+
+export const createRedirectionResponse = () => {
+  const headerText = [createResponseStatusLine(StatusCodes.MOVED_TEMPORARILY), createHeaderAttr('Location', '/user/index.html')].join(""); 
+  return Buffer.from(headerText);
+}

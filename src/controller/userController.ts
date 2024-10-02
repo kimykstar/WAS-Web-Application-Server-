@@ -1,12 +1,18 @@
-import { getMapping } from "../decorator/apiDecorator.ts";
+import { GetMapping, PostMapping } from "../decorator/apiDecorator.ts";
 // import { lowdbDao } from "../../DB/LowdbDao.ts";
 import { User } from "../domain/User.ts";
 
 class UserController {
-  @getMapping("/create")
-  signUp({ userId, password, name, email }: Record<string, string>) {
+  @GetMapping("/create")
+  signUp({ userId, password, nickName, email }: Record<string, string>) {
     // lowdbDao.insertRecord("user", new User(userId, password, name, email));
-    return Buffer.from(`id: ${userId}\npassword: ${password}\nname: ${name}\nemail: ${email}`);
+    return Buffer.from(`password: ${password}\nname: ${nickName}\nemail: ${email}`);
+  }
+
+  @PostMapping("/create")
+  postSignUp({ userId, password, nickName, email }: Record<string, string>) {
+    // lowdbDao.insertRecord("user", new User(userId, password, name, email));
+    return Buffer.from(`password: ${password}\nname: ${nickName}\nemail: ${email}`); 
   }
 }
 

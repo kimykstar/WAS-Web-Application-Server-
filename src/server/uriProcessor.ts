@@ -1,30 +1,43 @@
 import fs from "fs";
 import { NotFoundUriException } from "../exception/BadRequestException.ts";
 import { router } from "./Router.ts";
-export const getResourceAndExtensionByUri = (uri: string, queryParams?: Record<string, string>): [Buffer, string] => {
+import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./staticFileManager.ts";
+import { createOkResponse, createRedirectionResponse } from "./responseCreator.ts";
+
+export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, reqBody: Record<string, string>): Buffer => {
   if (uri === "/") {
-    return [fs.readFileSync("./src/static/index.html"), "HTML"];
+    const content = fs.readFileSync("./src/static/user/index.html")
+    return createOkResponse(content, 'HTML');
   }
 
-  const filename = uri.substring(1);
+  const fileName = uri.substring(1);
 
-  if (getStaticFileNames().includes(filename)) {
-    const content = fs.readFileSync(`./src/static/${filename}`);
-    const fileExtension = filename.split(".")[1];
-
-    return [content, fileExtension];
+  if (isValidExtension(fileName) && isExistStaticFile(fileName)) {
+    const content = getStaticFileContent(fileName);
+    const [name, extension] = fileName.split(".");
+    return createOkResponse(content, extension);
   }
 
-  const api = router.getApi(uri);
+  const api = router.getApi(httpMethod, uri);
 
-  if (api) {
-    // uri에 대한 parameter들을 추출하고 api()메서드에 전달
-    return [api(queryParams), "TEXT_UTF8"];
+  if (httpMethod === 'GET' && api) {
+    const queryParams = queryStringToObject(uri);
+    return createOkResponse(api(queryParams), "TEXT_UTF8");
+  }else if(httpMethod === 'POST' && api) {
+    api(reqBody);
+    return createRedirectionResponse();
   }
 
   throw new NotFoundUriException();
 };
 
-const getStaticFileNames = () => {
-  return fs.readdirSync("./src/static");
+
+const queryStringToObject = (queryString: string) => {
+  return queryString
+    .split("&")
+    .map((entry) => entry.split("="))
+    .reduce((result: Record<string, string>, [key, value]) => {
+      result[key] = value;
+      return result;
+    }, {});
 };

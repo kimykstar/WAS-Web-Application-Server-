@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/signup.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <page-header></page-header>
+    <h1 class="signupTitle">회원가입</h1>
+    <form class="signupForm" action="/create" method="post">
+      <form-input class="signupEmail" type="text" name="email" placeholder="이메일을 입력해주세요"></form-input>
+      <form-input class="signupNickName" type="text" name="nickName" placeholder="닉네임을 입력해주세요"></form-input>
+      <form-input class="signupPassword" type="password" name="password" placeholder="비밀번호를 입력해주세요"></form-input>
+      <button class="signupFormBtn" type="submit">회원가입</button>
+    </form>
+    <script type="module" src="../javascript/header.js"></script>
+    <script type="module" src="../javascript/inputBox.js"></script>
+  </body>
+</html>
