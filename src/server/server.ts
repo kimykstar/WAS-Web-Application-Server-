@@ -13,8 +13,7 @@ export const server = net.createServer((socket: any) => {
     const [httpMethod, uri] = getUriFromRequest(request); // Todo: getRequestObjectFromRequest로 변경 및 동작 변경
     const bodyObj = getRequestBodyObj(request);
     try {
-      const [responseBody, fileExtension] = getResourceAndExtensionByUri(httpMethod, uri, bodyObj);
-      const response = createOkResponse(responseBody, fileExtension);
+      const response = getResourceAndExtensionByUri(httpMethod, uri, bodyObj);
       socket.write(response);
       socket.end();
     } catch (e: any) {

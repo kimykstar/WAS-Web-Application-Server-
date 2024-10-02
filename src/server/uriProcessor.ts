@@ -2,10 +2,12 @@ import fs from "fs";
 import { NotFoundUriException } from "../exception/BadRequestException.ts";
 import { router } from "./Router.ts";
 import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./staticFileManager.ts";
+import { createOkResponse, createRedirectionResponse } from "./responseCreator.ts";
 
-export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, reqBody: Record<string, string>): [Buffer, string] => {
+export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, reqBody: Record<string, string>): Buffer => {
   if (uri === "/") {
-    return [fs.readFileSync("./src/static/user/index.html"), "HTML"];
+    const content = fs.readFileSync("./src/static/user/index.html")
+    return createOkResponse(content, 'HTML');
   }
 
   const fileName = uri.substring(1);
@@ -13,17 +15,17 @@ export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, re
   if (isValidExtension(fileName) && isExistStaticFile(fileName)) {
     const content = getStaticFileContent(fileName);
     const [name, extension] = fileName.split(".");
-
-    return [content, extension];
+    return createOkResponse(content, extension);
   }
 
   const api = router.getApi(httpMethod, uri);
 
   if (httpMethod === 'GET' && api) {
     const queryParams = queryStringToObject(uri);
-    return [api(queryParams), "TEXT_UTF8"];
+    return createOkResponse(api(queryParams), "TEXT_UTF8");
   }else if(httpMethod === 'POST' && api) {
-    return [api(reqBody), 'TEXT_UTF8'];
+    api(reqBody);
+    return createRedirectionResponse();
   }
 
   throw new NotFoundUriException();
