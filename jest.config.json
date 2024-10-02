@@ -11,9 +11,12 @@
       }
     },
     {
-      "preset": "ts-jest/presets/default-esm",
+      "preset": "ts-jest",
       "displayName": "TS test",
-      "testMatch": ["<rootDir>/src/__test__/Server/**/*.test.ts", "<rootDir>/src/__test__/*.test.ts"]
+      "testMatch": ["<rootDir>/src/__test__/Server/**/*.test.ts", "<rootDir>/src/__test__/*.test.ts"],
+      "transform": {
+        "^.+\\.(js|ts)?$": ["ts-jest", { "useESM": true }]
+      }
     }
   ]
 }

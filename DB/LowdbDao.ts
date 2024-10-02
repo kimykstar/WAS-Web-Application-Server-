@@ -23,6 +23,12 @@ class LowdbDao {
 
     return record;
   }
+
+  async getRecord(tableName: string, email: string) {
+    const table = await this.#connectTable(tableName);
+    const data = table.data["records"];
+    return {'1': '1'};
+  }
 }
 
 export const lowdbDao = new LowdbDao();
