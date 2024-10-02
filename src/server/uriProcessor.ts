@@ -5,7 +5,7 @@ import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./sta
 
 export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, reqBody: Record<string, string>): [Buffer, string] => {
   if (uri === "/") {
-    return [fs.readFileSync("./src/static/views/index.html"), "HTML"];
+    return [fs.readFileSync("./src/static/user/index.html"), "HTML"];
   }
 
   const fileName = uri.substring(1);

@@ -5,11 +5,11 @@ describe('Static file manager test', () => {
   it.each([
     ['images/dog.jpg', true],
     ['css/index.css', true],
-    ['views/index.html', true],
+    ['user/index.html', true],
     ['images/favicon.ico', true],
-    ['views/hello.ddd', false],
-    ['views/hello', false],
-    ['views/hello.test.js', false]
+    ['user/hello.ddd', false],
+    ['user/hello', false],
+    ['user/hello.test.js', false]
   ])('isValidExtension func test', (filePath, expectFlag) => {
     const flag = isValidExtension(filePath);
     expect(flag).toBe(expectFlag);
@@ -18,7 +18,7 @@ describe('Static file manager test', () => {
   it.each([
     ['images/dog.jpg', true],
     ['css/index.css', true],
-    ['views/index.html', true],
+    ['user/index.html', true],
     ['images/favicon.ico', true],
     ['images/cat.png', false],
   ])('isExistStaticFile func test', (filePath, expectFlag) => {
@@ -29,7 +29,7 @@ describe('Static file manager test', () => {
   it.each([
     ['images/dog.jpg', './src/static/images/dog.jpg'],
     ['css/index.css', './src/static/css/index.css'],
-    ['views/index.html', './src/static/views/index.html'],
+    ['user/index.html', './src/static/user/index.html'],
     ['images/favicon.ico', './src/static/images/favicon.ico'],
   ])('getStaticFile func test', (fileName, filePath) => {
     const fileContent = fs.readFileSync(filePath);

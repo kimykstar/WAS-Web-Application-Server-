@@ -4,9 +4,9 @@ import fs from "fs";
 
 describe("Static file request Test", () => {
   it.each([
-    ["/", "./src/static/views/index.html", { "content-type": "text/html" }],
-    ["", "./src/static/views/index.html", { "content-type": "text/html" }],
-    ["/views/index.html", "./src/static/views/index.html", { "content-type": "text/html" }],
+    ["/", "./src/static/user/index.html", { "content-type": "text/html" }],
+    ["", "./src/static/user/index.html", { "content-type": "text/html" }],
+    ["/user/index.html", "./src/static/user/index.html", { "content-type": "text/html" }],
     ["/css/index.css", "./src/static/css/index.css", { "content-type": "text/css" }],
     ["/javascript/header.js", "./src/static/javascript/header.js", { "content-type": "text/javascript" }],
   ])("Text static file request Test", async (requestUri, staticFilePath, expectHeader) => {
