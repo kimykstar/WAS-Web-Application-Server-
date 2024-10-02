@@ -3,34 +3,34 @@ import fs from 'fs';
 
 describe('Static file manager test', () => {
   it.each([
-    ['dog.jpg', true],
-    ['index.css', true],
-    ['index.html', true],
-    ['favicon.ico', true],
-    ['hello.ddd', false],
-    ['hello', false],
-    ['hello.test.js', false]
-  ])('isValidExtension func test', (fileName, expectFlag) => {
-    const flag = isValidExtension(fileName);
+    ['images/dog.jpg', true],
+    ['css/index.css', true],
+    ['views/index.html', true],
+    ['images/favicon.ico', true],
+    ['views/hello.ddd', false],
+    ['views/hello', false],
+    ['views/hello.test.js', false]
+  ])('isValidExtension func test', (filePath, expectFlag) => {
+    const flag = isValidExtension(filePath);
     expect(flag).toBe(expectFlag);
   })
 
   it.each([
-    ['dog.jpg', true],
-    ['index.css', true],
-    ['index.html', true],
-    ['favicon.ico', true],
-    ['cat.png', false],
-  ])('isExistStaticFile func test', (fileName, expectFlag) => {
-    const flag = isExistStaticFile(fileName);
+    ['images/dog.jpg', true],
+    ['css/index.css', true],
+    ['views/index.html', true],
+    ['images/favicon.ico', true],
+    ['images/cat.png', false],
+  ])('isExistStaticFile func test', (filePath, expectFlag) => {
+    const flag = isExistStaticFile(filePath);
     expect(flag).toBe(expectFlag);
   })
 
   it.each([
-    ['dog.jpg', './src/static/images/dog.jpg'],
-    ['index.css', './src/static/css/index.css'],
-    ['index.html', './src/static/views/index.html'],
-    ['favicon.ico', './src/static/images/favicon.ico'],
+    ['images/dog.jpg', './src/static/images/dog.jpg'],
+    ['css/index.css', './src/static/css/index.css'],
+    ['views/index.html', './src/static/views/index.html'],
+    ['images/favicon.ico', './src/static/images/favicon.ico'],
   ])('getStaticFile func test', (fileName, filePath) => {
     const fileContent = fs.readFileSync(filePath);
     expect(getStaticFileContent(fileName))
