@@ -4,7 +4,7 @@ import { router } from "./Router.ts";
 import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./staticFileManager.ts";
 import { createOkResponse, createRedirectionResponse } from "./responseCreator.ts";
 
-export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, reqBody: Record<string, string>): Buffer => {
+export const getResponseByUri = (httpMethod: string, uri: string, reqBody: Record<string, string>): Buffer => {
   if (uri === "/") {
     const content = fs.readFileSync("./src/static/user/index.html")
     return createOkResponse(content, 'HTML');
@@ -15,7 +15,7 @@ export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, re
   if (isValidExtension(fileName) && isExistStaticFile(fileName)) {
     const content = getStaticFileContent(fileName);
     const [name, extension] = fileName.split(".");
-    return createOkResponse(content, extension);
+    return createOkResponse(content, extension.toUpperCase());
   }
 
   const api = router.getApi(httpMethod, uri);
@@ -25,7 +25,7 @@ export const getResourceAndExtensionByUri = (httpMethod: string, uri: string, re
     return createOkResponse(api(queryParams), "TEXT_UTF8");
   }else if(httpMethod === 'POST' && api) {
     api(reqBody);
-    return createRedirectionResponse();
+    return createRedirectionResponse('/user/index.html');
   }
 
   throw new NotFoundUriException();
