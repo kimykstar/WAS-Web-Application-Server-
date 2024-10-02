@@ -6,13 +6,13 @@ class UserController {
   @GetMapping("/create")
   signUp({ userId, password, nickName, email }: Record<string, string>) {
     // lowdbDao.insertRecord("user", new User(userId, password, name, email));
-    return Buffer.from(`id: ${userId}\npassword: ${password}\nname: ${nickName}\nemail: ${email}`);
+    return Buffer.from(`password: ${password}\nname: ${nickName}\nemail: ${email}`);
   }
 
   @PostMapping("/create")
   postSignUp({ userId, password, nickName, email }: Record<string, string>) {
     // lowdbDao.insertRecord("user", new User(userId, password, name, email));
-    return Buffer.from(`id: ${userId}\npassword: ${password}\nname: ${nickName}\nemail: ${email}`); 
+    return Buffer.from(`password: ${password}\nname: ${nickName}\nemail: ${email}`); 
   }
 }
 
