@@ -27,7 +27,8 @@ export const getResponseByUri = async (
   if (httpMethod === "GET" && api) {
     const queryParams = queryStringToObject(uri);
     return createOkResponse(api(queryParams), "TEXT_UTF8");
-  } else if (httpMethod === "POST" && api) {
+  }
+  if (httpMethod === "POST" && api) {
     return await api(reqBody);
   }
 
