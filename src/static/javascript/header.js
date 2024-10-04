@@ -6,6 +6,14 @@ class Header extends HTMLElement{
       <div>HELLO, WEB!</div>
       <button type="button" class="signupBtn">로그인/회원가입</button>
     `;
+    this.#addHandlers();
+  }
+
+  #addHandlers() {
+    this.querySelector('.signupBtn')
+      .addEventListener('click', () => {
+        location.assign('/user/login.html');
+      })
   }
 
 }

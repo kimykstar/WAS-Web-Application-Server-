@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <page-header></page-header>
+    <h1 class="loginTitle">로그인</h1>
+    <form class="loginForm" action="/login" method="post">
+      <form-input class="loginEmail" type="text" name="email" placeholder="이메일을 입력해주세요"></form-input>
+      <form-input class="loginPassword" type="password" name="password" placeholder="비밀번호를 입력해주세요"></form-input>
+      <button class="loginFormBtn" type="submit">로그인</button>
+      <p>아직 회원가입을 안하셨나요? <a href="./form.html">회원가입하기</a></p>
+    </form>
+    <script type="module" src="../javascript/header.js"></script>
+    <script type="module" src="../javascript/inputBox.js"></script>
+  </body>
+</html>

@@ -39,15 +39,24 @@ const createHeader = (fileExtension: string): Buffer => {
 };
 
 export const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
-  const header = createHeader(fileExtension);
-  return Buffer.concat([header, responseBody]);
+  const response = new Response();
+  response.setStatusCode(StatusCodes.OK);
+  response.addHeader('content-type', MIME[fileExtension]);
+  response.setBody(responseBody);
+  return response.getResponse();
 };
 
 export const createResponseByBadRequest = (statusCode: number, message: string) => {
-  return [createResponseStatusLine(statusCode), createContentType("TEXT_UTF8"), CRLF, message].join("");
+  const response = new Response();
+  response.setStatusCode(statusCode);
+  response.addHeader('content-type', MIME['TEXT_UTF8']);
+  response.setBody(message);
+  return response.getResponse();
 };
 
-export const createRedirectionResponse = () => {
-  const headerText = [createResponseStatusLine(StatusCodes.MOVED_TEMPORARILY), createHeaderAttr('Location', '/user/index.html')].join(""); 
-  return Buffer.from(headerText);
+export const createRedirectionResponse = (redirectPath: string) => {
+  const response = new Response();
+  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
+  response.addHeader('location', redirectPath);
+  return response.getResponse();
 }

@@ -1,0 +1,29 @@
+@import url(variable.css);
+@import url(page.css);
+@import url(header.css);
+@import url(input.css);
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputBox {
+  border-radius: var(--rounded-sm);
+  width: 32rem;
+  height: 6.4rem;
+}
+
+.loginTitle {
+  text-align: center;
+}
+
+.loginFormBtn {
+  background-color: var(--accent-blue);
+  width: 32rem;
+  border: none;
+  color: var(--gray-50);
+  height: 4rem;
+  border-radius: var(--rounded-sm);
+}

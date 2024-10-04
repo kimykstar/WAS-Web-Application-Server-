@@ -1,8 +1,14 @@
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
 
+type User = {
+  email: string;
+  nickName: string;
+  password: string;
+};
+
 type TableSchema = {
-  records: Array<Object>;
+  records: Array<User>;
 };
 
 class LowdbDao {
@@ -14,7 +20,7 @@ class LowdbDao {
     return table;
   }
 
-  async insertRecord(tableName: string, record: Object) {
+  async insertRecord(tableName: string, record: User) {
     const table = await this.#connectTable(tableName);
     const data = table.data;
 
@@ -22,6 +28,12 @@ class LowdbDao {
     await table.write();
 
     return record;
+  }
+
+  async getRecord(tableName: string, email: string) {
+    const table = await this.#connectTable(tableName);
+    const records: Array<User> = table.data["records"];
+    return records.find((record: User) => record["email"] === email);
   }
 }
 

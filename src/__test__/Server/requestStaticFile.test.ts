@@ -11,8 +11,8 @@ describe("Static file request Test", () => {
     ["/javascript/header.js", "./src/static/javascript/header.js", { "content-type": "text/javascript" }],
   ])("Text static file request Test", async (requestUri, staticFilePath, expectHeader) => {
     const response = await request(server).get(requestUri).expect(200);
-    expect(response.text).toBe(fs.readFileSync(staticFilePath).toString());
     expect(response.headers).toEqual(expectHeader);
+    expect(response.text).toBe(fs.readFileSync(staticFilePath).toString());
   });
 
   it.each([
