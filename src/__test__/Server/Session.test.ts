@@ -7,6 +7,6 @@ describe("Create session test", () => {
     const uuid = createUUID();
     session.setSessionId(uuid).setSessionAttr("path", "/").setSessionAttr("HttpOnly").setSessionAttr("Max-Age", "3600");
 
-    expect(session.getSessionHeader()).toBe(`Set-Cookie: session_id=${uuid}; path=/; HttpOnly; Max-Age=3600\r\n`);
+    expect(session.getSessionHeader()).toBe(`session_id=${uuid}; path=/; HttpOnly; Max-Age=3600\r\n`);
   });
 });

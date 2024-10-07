@@ -1,6 +1,8 @@
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
 import { UnsupportedMimeTypeException } from "../exception/HttpException.ts";
 import Response from "../server/Response.ts";
+import Session from "../server/Session.ts";
+import { v4 as createUUID } from "uuid";
 
 const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;charset=UTF-8",
@@ -59,4 +61,22 @@ export const createRedirectionResponse = (redirectPath: string) => {
   response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
   response.addHeader("location", redirectPath);
   return response.getResponse();
+};
+
+export const createLoginRedirectionResponse = (redirectPath: string) => {
+  const response = new Response();
+  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
+  response.addHeader("location", redirectPath);
+  response.addHeader("Set-Cookie", createLoginSession());
+  return response.getResponse();
+};
+
+const createLoginSession = () => {
+  const session = new Session();
+  session
+    .setSessionId(createUUID())
+    .setSessionAttr("path", "/")
+    .setSessionAttr("HttpOnly")
+    .setSessionAttr("Max-Age", "3600");
+  return session.getSessionHeader();
 };

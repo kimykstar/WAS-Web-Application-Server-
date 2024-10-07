@@ -16,7 +16,7 @@ export default class Session {
 
   getSessionHeader() {
     return (
-      `Set-Cookie: session_id=${this.#id}; ` +
+      `session_id=${this.#id}; ` +
       Object.entries(this.#attribute)
         .map((obj) => (obj[1] === "" ? obj[0] : obj.join("=")))
         .join("; ") +
