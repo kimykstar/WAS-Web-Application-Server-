@@ -1,5 +1,5 @@
 import fs from "fs";
-import { NotFoundUriException } from "../exception/BadRequestException.ts";
+import { NotFoundUriException } from "../exception/HttpException.ts";
 import { router } from "./Router.ts";
 import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./staticFileManager.ts";
 import { createOkResponse } from "./responseCreator.ts";
