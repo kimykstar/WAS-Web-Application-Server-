@@ -70,8 +70,12 @@ export default class Request {
       }, {});
   }
 
-  getHeaderInfo() {
-    return [this.#httpMethod, this.#uri, this.#version, this.#header];
+  getRequestInfo() {
+    return [this.#httpMethod, this.#uri, this.#version];
+  }
+
+  getRequestHeader() {
+    return this.#header;
   }
 
   getQueryParams() {
