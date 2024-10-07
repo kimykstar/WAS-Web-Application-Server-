@@ -1,6 +1,8 @@
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
-import { UnsupportedMimeTypeException } from "../exception/BadRequestException.ts";
-import Response from '../server/Response.ts';
+import { UnsupportedMimeTypeException } from "../exception/HttpException.ts";
+import Response from "../server/Response.ts";
+import Session from "../server/Session.ts";
+import { v4 as createUUID } from "uuid";
 
 const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;charset=UTF-8",
@@ -30,7 +32,7 @@ const createContentType = (fileExtension: string) => {
 
 const createHeaderAttr = (key: string, value: string) => {
   return `${key}: ${value}\r\n`;
-}
+};
 
 const createHeader = (fileExtension: string): Buffer => {
   const headerText = [createResponseStatusLine(StatusCodes.OK), createContentType(fileExtension), CRLF].join("");
@@ -41,7 +43,7 @@ const createHeader = (fileExtension: string): Buffer => {
 export const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
   const response = new Response();
   response.setStatusCode(StatusCodes.OK);
-  response.addHeader('content-type', MIME[fileExtension]);
+  response.addHeader("content-type", MIME[fileExtension]);
   response.setBody(responseBody);
   return response.getResponse();
 };
@@ -49,7 +51,7 @@ export const createOkResponse = (responseBody: Buffer, fileExtension: string): B
 export const createResponseByBadRequest = (statusCode: number, message: string) => {
   const response = new Response();
   response.setStatusCode(statusCode);
-  response.addHeader('content-type', MIME['TEXT_UTF8']);
+  response.addHeader("content-type", MIME["TEXT_UTF8"]);
   response.setBody(message);
   return response.getResponse();
 };
@@ -57,6 +59,24 @@ export const createResponseByBadRequest = (statusCode: number, message: string) 
 export const createRedirectionResponse = (redirectPath: string) => {
   const response = new Response();
   response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
-  response.addHeader('location', redirectPath);
+  response.addHeader("location", redirectPath);
   return response.getResponse();
-}
+};
+
+export const createLoginRedirectionResponse = (redirectPath: string) => {
+  const response = new Response();
+  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
+  response.addHeader("location", redirectPath);
+  response.addHeader("Set-Cookie", createLoginSession());
+  return response.getResponse();
+};
+
+const createLoginSession = () => {
+  const session = new Session();
+  session
+    .setSessionId(createUUID())
+    .setSessionAttr("path", "/")
+    .setSessionAttr("HttpOnly")
+    .setSessionAttr("Max-Age", "3600");
+  return session.getSessionHeader();
+};

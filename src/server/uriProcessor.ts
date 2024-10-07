@@ -1,14 +1,13 @@
 import fs from "fs";
-import { NotFoundUriException } from "../exception/BadRequestException.ts";
+import { NotFoundUriException } from "../exception/HttpException.ts";
 import { router } from "./Router.ts";
 import { isExistStaticFile, isValidExtension, getStaticFileContent } from "./staticFileManager.ts";
 import { createOkResponse } from "./responseCreator.ts";
+import Request from "../server/Request.ts";
 
-export const getResponseByUri = async (
-  httpMethod: string,
-  uri: string,
-  reqBody: Record<string, string>
-): Promise<Buffer> => {
+export const getResponseByUri = async (request: Request): Promise<Buffer> => {
+  const [httpMethod, uri, version] = request.getRequestInfo();
+  const reqBody = request.getBodyContent();
   if (uri === "/") {
     const content = fs.readFileSync("./src/static/user/index.html");
     return createOkResponse(content, "HTML");
@@ -25,7 +24,7 @@ export const getResponseByUri = async (
   const api = router.getApi(httpMethod, uri);
 
   if (httpMethod === "GET" && api) {
-    const queryParams = queryStringToObject(uri);
+    const queryParams = request.getQueryParams();
     return createOkResponse(api(queryParams), "TEXT_UTF8");
   }
   if (httpMethod === "POST" && api) {
@@ -33,14 +32,4 @@ export const getResponseByUri = async (
   }
 
   throw new NotFoundUriException();
-};
-
-const queryStringToObject = (queryString: string) => {
-  return queryString
-    .split("&")
-    .map((entry) => entry.split("="))
-    .reduce((result: Record<string, string>, [key, value]) => {
-      result[key] = value;
-      return result;
-    }, {});
 };

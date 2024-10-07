@@ -1,23 +1,22 @@
 import net from "net";
-import { getRequestBodyObj, getUriFromRequest } from "./requestParser.ts";
 import { logger } from "./logger.ts";
 import { getResponseByUri } from "./uriProcessor.ts";
 import { createResponseByBadRequest } from "./responseCreator.ts";
-import { BadRequestException } from "../exception/BadRequestException.ts";
+import { HttpException } from "../exception/HttpException.ts";
+import Request from "../server/Request.ts";
 import "../controller/userController.ts";
 
 export const server = net.createServer((socket: any) => {
   socket.on("data", async (data: string) => {
-    const request = data.toString();
-    logger.http(request);
-    const [httpMethod, uri] = getUriFromRequest(request);
-    const bodyObj = getRequestBodyObj(request);
+    const requestText = data.toString();
+    logger.http(requestText);
+    const request = new Request(requestText);
     try {
-      const response = await getResponseByUri(httpMethod, uri, bodyObj);
+      const response = await getResponseByUri(request);
       socket.write(response);
       socket.end();
     } catch (e: any) {
-      if (e instanceof BadRequestException) {
+      if (e instanceof HttpException) {
         const response = createResponseByBadRequest(e.getStatusCode(), e.message);
         socket.write(response);
         socket.end();

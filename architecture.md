@@ -6,3 +6,22 @@ graph LR
   requestSignup(회원가입 요청) --> uriParser
   uriProcessor -- GET 요청인 경우 --> controller
 ```
+
+```mermaid
+graph TD
+
+  Server[Server] --> |Response| Client
+  Client[Client] --> |Request| Server
+
+  subgraph WAS[WAS]
+    Server[Server] --> |Request| RequestParser[RequestParser]
+    RequestParser --> |Request객체| URIProcessor[URIProcessor]
+    URIProcessor --> |Request객체| StaticFileManager[StaticFileManager]
+    StaticFileManager --> |Response객체| URIProcessor
+    URIProcessor --> |Request객체| Router[Router]
+    Router --> |Response객체| URIProcessor
+
+  end
+```
+
+![alt text](image.png)
