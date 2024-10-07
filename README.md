@@ -5,7 +5,7 @@
 - [ ] Request객체 생성 및 동작 연결
   - [x] Request객체 구현
   - [x] Request테스트 코드 작성 및 검증
-  - [ ] Request동작 연결
+  - [x] Request동작 연결
   - [ ] Request동작 연결 Test
 - [ ] 로그인 시 세션 관리
   - [ ] 세션 관리 방법 채택
