@@ -1,38 +1,38 @@
 export default class Request {
-  #httpMethod: string = "";
-  #version: string = "";
-  #uri: string = "";
-  #queryParams: Record<string, string> = {};
-  #header: Record<string, string> = {};
-  #body: Record<string, string> = {};
+  private httpMethod: string = "";
+  private version: string = "";
+  private uri: string = "";
+  private queryParams: Record<string, string> = {};
+  private header: Record<string, string> = {};
+  private body: Record<string, string> = {};
 
   constructor(request: string) {
-    this.#parseToRequest(request);
+    this.parseToRequest(request);
   }
 
-  #parseToRequest(request: string) {
+  private parseToRequest(request: string) {
     const [header, body] = request.split("\r\n\r\n");
-    this.#parseHeader(header);
-    this.#parseBody(body);
+    this.parseHeader(header);
+    this.parseBody(body);
   }
 
-  #parseHeader(header: string) {
+  private parseHeader(header: string) {
     const headers = header.split("\r\n");
-    this.#parseFirstLine(headers[0]);
-    this.#parseHeaderInfo(headers.slice(1), this.#header);
+    this.parseFirstLine(headers[0]);
+    this.parseHeaderInfo(headers.slice(1));
   }
 
-  #parseFirstLine(firstLine: string) {
-    [this.#httpMethod, this.#uri, this.#version] = firstLine.split(" ");
+  private parseFirstLine(firstLine: string) {
+    [this.httpMethod, this.uri, this.version] = firstLine.split(" ");
     const queryParam = {};
 
-    if (this.#uri.includes("?")) {
-      this.#queryParams = this.#parseQueryParams(this.#uri, queryParam);
-      this.#uri = this.#uri.substring(0, this.#uri.indexOf("?"));
+    if (this.uri.includes("?")) {
+      this.queryParams = this.parseQueryParams(this.uri, queryParam);
+      this.uri = this.uri.substring(0, this.uri.indexOf("?"));
     }
   }
 
-  #parseQueryParams(uri: string, queryParam: Record<string, string>) {
+  private parseQueryParams(uri: string, queryParam: Record<string, string>) {
     const queryParams = uri.substring(uri.indexOf("?") + 1);
     return queryParams
       .split("&")
@@ -43,24 +43,24 @@ export default class Request {
       }, queryParam);
   }
 
-  #parseHeaderInfo(headerInfos: string[], initialHeaderObj: Record<string, string>) {
+  private parseHeaderInfo(headerInfos: string[]) {
     headerInfos
       .map((header) => header.split(":"))
       .reduce((reducerObj: Record<string, string>, [key, value]) => {
         reducerObj[key.trim()] = value.trim();
         return reducerObj;
-      }, initialHeaderObj);
+      }, this.header);
   }
 
-  #parseBody(body: string) {
+  private parseBody(body: string) {
     if (body.length > 0) {
-      this.#body = this.#queryStringToObject(body);
+      this.body = this.queryStringToObject(body);
     } else {
-      this.#body = {};
+      this.body = {};
     }
   }
 
-  #queryStringToObject(queryString: string) {
+  private queryStringToObject(queryString: string) {
     return queryString
       .split("&")
       .map((entry) => entry.split("="))
@@ -71,18 +71,18 @@ export default class Request {
   }
 
   getRequestInfo() {
-    return [this.#httpMethod, this.#uri, this.#version];
+    return [this.httpMethod, this.uri, this.version];
   }
 
   getRequestHeader() {
-    return this.#header;
+    return this.header;
   }
 
   getQueryParams() {
-    return this.#queryParams;
+    return this.queryParams;
   }
 
   getBodyContent() {
-    return this.#body;
+    return this.body;
   }
 }

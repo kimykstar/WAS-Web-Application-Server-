@@ -1,11 +1,11 @@
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
 import { UnsupportedMimeTypeException } from "../exception/HttpException.ts";
 import Response from "../server/Response.ts";
-import Session from "../server/Session.ts";
+import Cookie from "./Cookie.ts";
 import { v4 as createUUID } from "uuid";
 
 const MIME: Record<string, string> = Object.freeze({
-  TEXT_UTF8: "text/plain;charset=UTF-8",
+  TEXT_UTF8: "text/plain;",
   HTML: "text/html",
   CSS: "text/css",
   JS: "text/javascript",
@@ -72,7 +72,7 @@ export const createLoginRedirectionResponse = (redirectPath: string) => {
 };
 
 const createLoginSession = () => {
-  const session = new Session();
+  const session = new Cookie();
   session
     .setSessionId(createUUID())
     .setSessionAttr("path", "/")
