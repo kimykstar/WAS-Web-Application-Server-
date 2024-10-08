@@ -6,7 +6,7 @@ import {
   createRedirectionResponse,
   createResponseByBadRequest,
 } from "../server/responseCreator.ts";
-import { StatusCodes } from "http-status-codes";
+import SessionManager from "../server/SessionManager.ts";
 
 class UserController {
   @PostMapping("/create")
@@ -19,7 +19,7 @@ class UserController {
   async login({ email, password }: Record<string, string>) {
     const record = await lowdbDao.getRecord("user", email);
     if (typeof record === "object" && password === record["password"]) {
-      return createLoginRedirectionResponse("/index.html");
+      return createLoginRedirectionResponse("/user/index.html", email);
     }
     return createRedirectionResponse("/user/login_failed.html");
   }

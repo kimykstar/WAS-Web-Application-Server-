@@ -1,11 +1,12 @@
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
 import { UnsupportedMimeTypeException } from "../exception/HttpException.ts";
 import Response from "../server/Response.ts";
-import Session from "../server/Session.ts";
+import Cookie from "./Cookie.ts";
 import { v4 as createUUID } from "uuid";
+import SessionManager from "./SessionManager.ts";
 
 const MIME: Record<string, string> = Object.freeze({
-  TEXT_UTF8: "text/plain;charset=UTF-8",
+  TEXT_UTF8: "text/plain;",
   HTML: "text/html",
   CSS: "text/css",
   JS: "text/javascript",
@@ -35,48 +36,54 @@ const createHeaderAttr = (key: string, value: string) => {
 };
 
 const createHeader = (fileExtension: string): Buffer => {
-  const headerText = [createResponseStatusLine(StatusCodes.OK), createContentType(fileExtension), CRLF].join("");
+  const headerText = [
+    createResponseStatusLine(StatusCodes.OK),
+    createContentType(fileExtension),
+    CRLF,
+  ].join("");
 
   return Buffer.from(headerText);
 };
 
 export const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
   const response = new Response();
-  response.setStatusCode(StatusCodes.OK);
-  response.addHeader("content-type", MIME[fileExtension]);
-  response.setBody(responseBody);
+  response
+    .setStatusCode(StatusCodes.OK)
+    .addHeader("content-type", MIME[fileExtension])
+    .setBody(responseBody);
   return response.getResponse();
 };
 
 export const createResponseByBadRequest = (statusCode: number, message: string) => {
   const response = new Response();
-  response.setStatusCode(statusCode);
-  response.addHeader("content-type", MIME["TEXT_UTF8"]);
-  response.setBody(message);
+  response.setStatusCode(statusCode).addHeader("content-type", MIME["TEXT_UTF8"]).setBody(message);
   return response.getResponse();
 };
 
 export const createRedirectionResponse = (redirectPath: string) => {
   const response = new Response();
-  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
-  response.addHeader("location", redirectPath);
+  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY).addHeader("location", redirectPath);
   return response.getResponse();
 };
 
-export const createLoginRedirectionResponse = (redirectPath: string) => {
+export const createLoginRedirectionResponse = (redirectPath: string, email: string) => {
   const response = new Response();
-  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
-  response.addHeader("location", redirectPath);
-  response.addHeader("Set-Cookie", createLoginSession());
+  response
+    .setStatusCode(StatusCodes.MOVED_TEMPORARILY)
+    .addHeader("location", redirectPath)
+    .addHeader("Set-Cookie", createLoginSessionCookie(email));
   return response.getResponse();
 };
 
-const createLoginSession = () => {
-  const session = new Session();
-  session
-    .setSessionId(createUUID())
+const createLoginSessionCookie = (email: string) => {
+  const cookie = new Cookie();
+  const uuid = createUUID();
+  // ToDo: Singleton호출
+  const sessionManger = new SessionManager(SessionManager.SECOND);
+  cookie
+    .setSessionId(uuid)
     .setSessionAttr("path", "/")
     .setSessionAttr("HttpOnly")
     .setSessionAttr("Max-Age", "3600");
-  return session.getSessionHeader();
+  return cookie.getSessionHeader();
 };
