@@ -16,7 +16,7 @@
 
 - [x] 리뷰 반영 리팩토링
 - [x] 쿼리 스트링 형식 함수 추상화(Request.ts파일)
-- [ ] Response객체 Builder로 Refactoring
+- [x] Response객체 Builder로 Refactoring
 - [ ] 토큰에 대한 학습
 - [ ] 로그인 시 토큰을 통한 사용자 정보 관리 구현
 - [ ] 로그인 시 보이는 페이지 다르게 하기
