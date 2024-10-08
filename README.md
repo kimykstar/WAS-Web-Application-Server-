@@ -17,7 +17,7 @@
 - [x] 리뷰 반영 리팩토링
 - [x] 쿼리 스트링 형식 함수 추상화(Request.ts파일)
 - [x] Response객체 Builder로 Refactoring
-- [ ] 세션을 Server에서 저장할 방법 구상 및 구현하기
+- [x] 세션을 Server에서 저장할 방법 구상 및 구현하기
 - [ ] 토큰에 대한 학습
 
 ## 수(241002)
