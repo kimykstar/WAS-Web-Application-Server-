@@ -27,20 +27,20 @@ export default class Request {
     const queryParam = {};
 
     if (this.uri.includes("?")) {
-      this.queryParams = this.parseQueryParams(this.uri, queryParam);
+      this.parseQueryParams(this.uri.substring(this.uri.indexOf("?") + 1), this.queryParams);
       this.uri = this.uri.substring(0, this.uri.indexOf("?"));
     }
   }
 
-  private parseQueryParams(uri: string, queryParam: Record<string, string>) {
+  private parseQueryParams(uri: string, queryParamObj: Record<string, string>) {
     const queryParams = uri.substring(uri.indexOf("?") + 1);
-    return queryParams
+    queryParams
       .split("&")
       .map((params) => params.split("="))
       .reduce((paramObj: Record<string, string>, [key, value]) => {
         paramObj[key] = value;
         return paramObj;
-      }, queryParam);
+      }, queryParamObj);
   }
 
   private parseHeaderInfo(headerInfos: string[]) {
@@ -54,20 +54,8 @@ export default class Request {
 
   private parseBody(body: string) {
     if (body.length > 0) {
-      this.body = this.queryStringToObject(body);
-    } else {
-      this.body = {};
+      this.parseQueryParams(body, this.body);
     }
-  }
-
-  private queryStringToObject(queryString: string) {
-    return queryString
-      .split("&")
-      .map((entry) => entry.split("="))
-      .reduce((result: Record<string, string>, [key, value]) => {
-        result[key] = value;
-        return result;
-      }, {});
   }
 
   getRequestInfo() {
