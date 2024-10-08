@@ -19,8 +19,7 @@ export default class Cookie {
       `session_id=${this.id}; ` +
       Object.entries(this.attribute)
         .map((obj) => (obj[1] === "" ? obj[0] : obj.join("=")))
-        .join("; ") +
-      "\r\n"
+        .join("; ")
     );
   }
 

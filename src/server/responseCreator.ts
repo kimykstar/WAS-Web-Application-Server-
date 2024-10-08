@@ -63,8 +63,8 @@ export const createLoginRedirectionResponse = (redirectPath: string, email: stri
   const response = new Response();
   response
     .setStatusCode(StatusCodes.MOVED_TEMPORARILY)
-    .addHeader("location", redirectPath)
-    .addHeader("Set-Cookie", createLoginSessionCookie(email));
+    .addHeader("Set-Cookie", createLoginSessionCookie(email))
+    .addHeader("location", redirectPath);
   return response.getResponse();
 };
 
