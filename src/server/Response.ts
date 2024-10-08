@@ -12,10 +12,12 @@ export default class Response {
 
   setStatusCode(statusCode: number) {
     this.statusCode = statusCode;
+    return this;
   }
 
   addHeader(key: string, value: string) {
     this.header[key] = value;
+    return this;
   }
 
   setBody(content: Buffer | string) {
@@ -23,6 +25,7 @@ export default class Response {
       content = Buffer.from(content);
     }
     this.body = content;
+    return this;
   }
 
   createHeader() {

@@ -35,48 +35,51 @@ const createHeaderAttr = (key: string, value: string) => {
 };
 
 const createHeader = (fileExtension: string): Buffer => {
-  const headerText = [createResponseStatusLine(StatusCodes.OK), createContentType(fileExtension), CRLF].join("");
+  const headerText = [
+    createResponseStatusLine(StatusCodes.OK),
+    createContentType(fileExtension),
+    CRLF,
+  ].join("");
 
   return Buffer.from(headerText);
 };
 
 export const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
   const response = new Response();
-  response.setStatusCode(StatusCodes.OK);
-  response.addHeader("content-type", MIME[fileExtension]);
-  response.setBody(responseBody);
+  response
+    .setStatusCode(StatusCodes.OK)
+    .addHeader("content-type", MIME[fileExtension])
+    .setBody(responseBody);
   return response.getResponse();
 };
 
 export const createResponseByBadRequest = (statusCode: number, message: string) => {
   const response = new Response();
-  response.setStatusCode(statusCode);
-  response.addHeader("content-type", MIME["TEXT_UTF8"]);
-  response.setBody(message);
+  response.setStatusCode(statusCode).addHeader("content-type", MIME["TEXT_UTF8"]).setBody(message);
   return response.getResponse();
 };
 
 export const createRedirectionResponse = (redirectPath: string) => {
   const response = new Response();
-  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
-  response.addHeader("location", redirectPath);
+  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY).addHeader("location", redirectPath);
   return response.getResponse();
 };
 
 export const createLoginRedirectionResponse = (redirectPath: string) => {
   const response = new Response();
-  response.setStatusCode(StatusCodes.MOVED_TEMPORARILY);
-  response.addHeader("location", redirectPath);
-  response.addHeader("Set-Cookie", createLoginSession());
+  response
+    .setStatusCode(StatusCodes.MOVED_TEMPORARILY)
+    .addHeader("location", redirectPath)
+    .addHeader("Set-Cookie", createLoginSessionCookie());
   return response.getResponse();
 };
 
-const createLoginSession = () => {
-  const session = new Cookie();
-  session
+const createLoginSessionCookie = () => {
+  const cookie = new Cookie();
+  cookie
     .setSessionId(createUUID())
     .setSessionAttr("path", "/")
     .setSessionAttr("HttpOnly")
     .setSessionAttr("Max-Age", "3600");
-  return session.getSessionHeader();
+  return cookie.getSessionHeader();
 };
