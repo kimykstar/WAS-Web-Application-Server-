@@ -3,6 +3,7 @@ import { UnsupportedMimeTypeException } from "../exception/HttpException.ts";
 import Response from "../server/Response.ts";
 import Cookie from "./Cookie.ts";
 import { v4 as createUUID } from "uuid";
+import SessionManager from "./SessionManager.ts";
 
 const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;",
@@ -65,19 +66,22 @@ export const createRedirectionResponse = (redirectPath: string) => {
   return response.getResponse();
 };
 
-export const createLoginRedirectionResponse = (redirectPath: string) => {
+export const createLoginRedirectionResponse = (redirectPath: string, email: string) => {
   const response = new Response();
   response
     .setStatusCode(StatusCodes.MOVED_TEMPORARILY)
     .addHeader("location", redirectPath)
-    .addHeader("Set-Cookie", createLoginSessionCookie());
+    .addHeader("Set-Cookie", createLoginSessionCookie(email));
   return response.getResponse();
 };
 
-const createLoginSessionCookie = () => {
+const createLoginSessionCookie = (email: string) => {
   const cookie = new Cookie();
+  const uuid = createUUID();
+  // ToDo: Singleton호출
+  const sessionManger = new SessionManager(SessionManager.SECOND);
   cookie
-    .setSessionId(createUUID())
+    .setSessionId(uuid)
     .setSessionAttr("path", "/")
     .setSessionAttr("HttpOnly")
     .setSessionAttr("Max-Age", "3600");
