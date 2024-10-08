@@ -1,11 +1,11 @@
-import SessionManager from "../../server/SessionManager";
+import { sessionManager, SECOND } from "../../server/SessionManager";
 import { v4 as createUUID } from "uuid";
 
 describe("SessionManager session test", () => {
-  // ToDo: Singleton 호출
-  const sessionManager = new SessionManager(SessionManager.SECOND);
+  sessionManager.setExpirationTime(2 * SECOND);
   let mockUUID: string;
   let email: string;
+
   beforeAll(() => {
     mockUUID = createUUID();
     email = "wow@naver.com";
@@ -21,6 +21,6 @@ describe("SessionManager session test", () => {
       expect(sessionManager.isExistSession(mockUUID)).toBe(false);
       expect(sessionManager.getSessionInfo(mockUUID)).toBeUndefined();
       done();
-    }, 2 * SessionManager.SECOND);
+    }, 2 * SECOND);
   });
 });

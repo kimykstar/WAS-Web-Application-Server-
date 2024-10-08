@@ -3,7 +3,7 @@ import { UnsupportedMimeTypeException } from "../exception/HttpException.ts";
 import Response from "../server/Response.ts";
 import Cookie from "./Cookie.ts";
 import { v4 as createUUID } from "uuid";
-import SessionManager from "./SessionManager.ts";
+import { sessionManager } from "./SessionManager.ts";
 
 const MIME: Record<string, string> = Object.freeze({
   TEXT_UTF8: "text/plain;",
@@ -36,21 +36,14 @@ const createHeaderAttr = (key: string, value: string) => {
 };
 
 const createHeader = (fileExtension: string): Buffer => {
-  const headerText = [
-    createResponseStatusLine(StatusCodes.OK),
-    createContentType(fileExtension),
-    CRLF,
-  ].join("");
+  const headerText = [createResponseStatusLine(StatusCodes.OK), createContentType(fileExtension), CRLF].join("");
 
   return Buffer.from(headerText);
 };
 
 export const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
   const response = new Response();
-  response
-    .setStatusCode(StatusCodes.OK)
-    .addHeader("content-type", MIME[fileExtension])
-    .setBody(responseBody);
+  response.setStatusCode(StatusCodes.OK).addHeader("content-type", MIME[fileExtension]).setBody(responseBody);
   return response.getResponse();
 };
 
@@ -78,12 +71,7 @@ export const createLoginRedirectionResponse = (redirectPath: string, email: stri
 const createLoginSessionCookie = (email: string) => {
   const cookie = new Cookie();
   const uuid = createUUID();
-  // ToDo: Singleton호출
-  const sessionManger = new SessionManager(SessionManager.SECOND);
-  cookie
-    .setSessionId(uuid)
-    .setSessionAttr("path", "/")
-    .setSessionAttr("HttpOnly")
-    .setSessionAttr("Max-Age", "3600");
+  sessionManager.createSession(uuid, email);
+  cookie.setSessionId(uuid).setSessionAttr("path", "/").setSessionAttr("HttpOnly").setSessionAttr("Max-Age", "3600");
   return cookie.getSessionHeader();
 };

@@ -1,13 +1,16 @@
-export default class SessionManager {
-  static SECOND = 1000;
-  static MINUTE = 60 * this.SECOND;
-  static SESSION_EXPIRATION_TIME = this.MINUTE;
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+const SESSION_EXPIRATION_TIME = MINUTE;
 
+class SessionManager {
   private sessions: Record<string, string>;
-  private expirationTime: number;
+  private expirationTime: number = SESSION_EXPIRATION_TIME;
   // ToDo: singleton
-  constructor(expirationTime: number) {
+  constructor() {
     this.sessions = {}; // SessionId: email형태로 저장
+  }
+
+  setExpirationTime(expirationTime: number) {
     this.expirationTime = expirationTime;
   }
 
@@ -35,3 +38,7 @@ export default class SessionManager {
     return Object.keys(this.sessions).includes(sessionId);
   }
 }
+
+const sessionManager = new SessionManager();
+
+export { sessionManager, SECOND, MINUTE, SESSION_EXPIRATION_TIME };
