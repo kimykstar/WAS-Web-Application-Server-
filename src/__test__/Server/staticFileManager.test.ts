@@ -5,7 +5,7 @@ describe("Static file manager test", () => {
   it.each([
     ["images/dog.jpg", true],
     ["css/index.css", true],
-    ["user/index.html", true],
+    ["index.html", true],
     ["images/favicon.ico", true],
     ["user/hello.ddd", false],
     ["user/hello", false],
@@ -19,7 +19,7 @@ describe("Static file manager test", () => {
   it.each([
     ["images/dog.jpg", true],
     ["css/index.css", true],
-    ["user/index.html", true],
+    ["index.html", true],
     ["images/favicon.ico", true],
     ["images/cat.png", false],
     ["process.test.html", false],
@@ -31,7 +31,7 @@ describe("Static file manager test", () => {
   it.each([
     ["images/dog.jpg", "./src/static/images/dog.jpg"],
     ["css/index.css", "./src/static/css/index.css"],
-    ["user/index.html", "./src/static/user/index.html"],
+    ["index.html", "./src/static/index.html"],
     ["images/favicon.ico", "./src/static/images/favicon.ico"],
   ])("getStaticFile func test", (fileName, filePath) => {
     const fileContent = fs.readFileSync(filePath);

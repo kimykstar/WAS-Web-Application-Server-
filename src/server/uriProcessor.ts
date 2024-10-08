@@ -9,7 +9,7 @@ export const getResponseByUri = async (request: Request): Promise<Buffer> => {
   const [httpMethod, uri, version] = request.getRequestInfo();
   const reqBody = request.getBodyContent();
   if (uri === "/") {
-    const content = fs.readFileSync("./src/static/user/index.html");
+    const content = fs.readFileSync("./src/static/index.html");
     return createOkResponse(content, "HTML");
   }
 
