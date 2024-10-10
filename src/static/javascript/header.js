@@ -8,7 +8,7 @@ class Header extends HTMLElement {
     if (flag) {
       this.innerHTML = `
         <div>HELLO, WEB!</div>
-        <div>
+        <div class='rightContainer'>
           <p>멤버리스트</p>
           <button type="button" class="myPageBtn">마이페이지</button>
           <button type="button" class="logOutBtn">로그아웃</button>
