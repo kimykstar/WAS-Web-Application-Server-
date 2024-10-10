@@ -40,6 +40,7 @@
 - [ ] 코드 리팩토링
   - [ ] UriProcessor리팩토링
   - [ ] UserController리팩토링
+  - [ ] userStatus.js리팩토링
 
 # 체크포인트
 
