@@ -10,14 +10,16 @@ import {
 import Request from "../server/Request.ts";
 
 class UserController {
-  // @GetMapping("/loginCheck")
-  // loginCheck(empty: Record<string, string>, authorized: string) {
-  //   let bodyContent = "unauthorized";
-  //   if (authorized) {
-  //     bodyContent = "authorized";
-  //     return createOkResponse(Buffer.from(bodyContent), "TEXT_UTF8");
-  //   }
-  // }
+  @GetMapping("/loginCheck")
+  loginCheck(empty: Record<string, string>, sessionId: string | undefined) {
+    let bodyContent: string = "unauthorized";
+    if (sessionId) {
+      // ToDo: SessionId검증 로직 추가
+      bodyContent = "authorized";
+      return createOkResponse(bodyContent, "TEXT_UTF8");
+    }
+    return createOkResponse(bodyContent, "TEXT_UTF8");
+  }
 
   @PostMapping("/create")
   postSignUp({ password, nickName, email }: Record<string, string>) {
