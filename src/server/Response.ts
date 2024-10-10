@@ -42,7 +42,6 @@ export default class Response {
 
   getResponse() {
     const header = Buffer.from(this.createHeader());
-
     return Buffer.concat([header, this.body]);
   }
 }

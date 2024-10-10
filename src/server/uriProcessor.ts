@@ -25,7 +25,10 @@ export const getResponseByUri = async (request: Request): Promise<Buffer> => {
 
   if (httpMethod === "GET" && api) {
     const queryParams = request.getQueryParams();
-    return createOkResponse(api(queryParams, request.getSessionId()), "TEXT_UTF8");
+    return createOkResponse(
+      api(queryParams, request.getCookie().getCookieValue("session_id")),
+      "TEXT_UTF8"
+    );
   }
   if (httpMethod === "POST" && api) {
     return await api(reqBody);
