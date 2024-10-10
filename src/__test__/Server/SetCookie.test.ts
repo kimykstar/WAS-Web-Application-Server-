@@ -6,12 +6,12 @@ describe("Response's set-cookie header make test", () => {
     const mockSetCookie = new SetCookie();
     const uuid = createUUID();
     mockSetCookie
-      .setCookieData("session_id", uuid)
+      .setCookieData("SID", uuid)
       .setCookieAttr("path", "/")
       .setCookieAttr("HttpOnly")
       .setCookieAttr("Max-Age", "3600");
 
     const setCookieValue = mockSetCookie.getSetCookieHeaderValue();
-    expect(setCookieValue).toBe(`session_id=${uuid}; path=/; HttpOnly; Max-Age=3600`);
+    expect(setCookieValue).toBe(`SID=${uuid}; path=/; HttpOnly; Max-Age=3600`);
   });
 });
