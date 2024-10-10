@@ -9,16 +9,18 @@ import {
 } from "../server/responseCreator.ts";
 import Request from "../server/Request.ts";
 
+// ToDo: Request인스턴스만 받아서 모든 컨트롤러에서 받아서 처리하도록
 class UserController {
   @GetMapping("/loginCheck")
   loginCheck(empty: Record<string, string>, sessionId: string | undefined) {
     let bodyContent: string = "unauthorized";
     if (sessionId) {
+      console.log();
       // ToDo: SessionId검증 로직 추가
       bodyContent = "authorized";
-      return createOkResponse(bodyContent, "TEXT_UTF8");
+      return bodyContent;
     }
-    return createOkResponse(bodyContent, "TEXT_UTF8");
+    return bodyContent;
   }
 
   @PostMapping("/create")
