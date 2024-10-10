@@ -37,6 +37,12 @@ class SessionManager {
   isExistSession(sessionId: string) {
     return Object.keys(this.sessions).includes(sessionId);
   }
+
+  deleteSession(sessionId: string) {
+    if (this.isExistSession(sessionId)) {
+      delete this.sessions[sessionId];
+    }
+  }
 }
 
 const sessionManager = new SessionManager();

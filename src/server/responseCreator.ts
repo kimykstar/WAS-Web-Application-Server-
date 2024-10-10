@@ -1,7 +1,7 @@
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
 import { UnsupportedMimeTypeException } from "../exception/HttpException.ts";
 import Response from "../server/Response.ts";
-import Cookie from "./Cookie.ts";
+import SetCookie from "./SetCookie.ts";
 import { v4 as createUUID } from "uuid";
 import { sessionManager } from "./SessionManager.ts";
 
@@ -36,14 +36,21 @@ const createHeaderAttr = (key: string, value: string) => {
 };
 
 const createHeader = (fileExtension: string): Buffer => {
-  const headerText = [createResponseStatusLine(StatusCodes.OK), createContentType(fileExtension), CRLF].join("");
+  const headerText = [
+    createResponseStatusLine(StatusCodes.OK),
+    createContentType(fileExtension),
+    CRLF,
+  ].join("");
 
   return Buffer.from(headerText);
 };
 
-export const createOkResponse = (responseBody: Buffer, fileExtension: string): Buffer => {
+export const createOkResponse = (responseBody: Buffer | string, fileExtension: string): Buffer => {
   const response = new Response();
-  response.setStatusCode(StatusCodes.OK).addHeader("content-type", MIME[fileExtension]).setBody(responseBody);
+  response
+    .setStatusCode(StatusCodes.OK)
+    .addHeader("content-type", MIME[fileExtension])
+    .setBody(responseBody);
   return response.getResponse();
 };
 
@@ -68,10 +75,22 @@ export const createLoginRedirectionResponse = (redirectPath: string, email: stri
   return response.getResponse();
 };
 
-const createLoginSessionCookie = (email: string) => {
-  const cookie = new Cookie();
+const createLoginSessionCookie = (userEmail: string) => {
+  const setCookie = new SetCookie();
   const uuid = createUUID();
-  sessionManager.createSession(uuid, email);
-  cookie.setSessionId(uuid).setSessionAttr("path", "/").setSessionAttr("HttpOnly").setSessionAttr("Max-Age", "3600");
-  return cookie.getSessionHeader();
+  sessionManager.createSession(uuid, userEmail);
+  setCookie
+    .setCookieData("SID", uuid)
+    .setCookieAttr("path", "/")
+    .setCookieAttr("HttpOnly")
+    .setCookieAttr("Max-Age", "3600");
+  return setCookie.getSetCookieHeaderValue();
+};
+
+export const createUserTokenResponse = (redirectPath: string, userEmail: string) => {
+  const response = new Response();
+  const tokenId = createUUID();
+  sessionManager.createSession(tokenId, userEmail);
+  response.setStatusCode(StatusCodes.OK).setBody(tokenId);
+  return response.getResponse();
 };
