@@ -4,7 +4,6 @@ class Header extends HTMLElement {
   async connectedCallback() {
     this.setAttribute("class", "navbar");
     const flag = await isLoggedIn();
-    console.log(flag);
     if (flag) {
       this.innerHTML = `
         <div>HELLO, WEB!</div>
@@ -14,6 +13,7 @@ class Header extends HTMLElement {
           <button type="button" class="logOutBtn">로그아웃</button>
         </div>
       `;
+      this.#addLogOutHandlers();
       return;
     }
     this.innerHTML = `
@@ -26,6 +26,23 @@ class Header extends HTMLElement {
   #addHandlers() {
     this.querySelector(".signupBtn").addEventListener("click", () => {
       location.assign("/user/login.html");
+    });
+  }
+
+  #addLogOutHandlers() {
+    console.log(this.querySelector(".logOutBtn"));
+    this.querySelector(".logOutBtn").addEventListener("click", async () => {
+      const token = sessionStorage.getItem("token");
+      const response = await fetch("/logout", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        sessionStorage.removeItem("token");
+        location.reload();
+      }
     });
   }
 }

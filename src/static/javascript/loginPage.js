@@ -8,7 +8,7 @@ document.querySelector(".loginForm").addEventListener("submit", async (event) =>
     method: "POST",
     body: formData,
   });
-  handleLoginResponse(response);
+  await handleLoginResponse(response);
 });
 
 const getLoginFormData = () => {
@@ -23,11 +23,11 @@ const getLoginFormData = () => {
   return formData.join("&");
 };
 
-const handleLoginResponse = (response) => {
+const handleLoginResponse = async (response) => {
   const statusCode = response.status;
-
+  const token = await response.text();
   if (statusCode === 200) {
-    const redirectionPath = response.url;
-    window.location.assign(redirectionPath);
+    sessionStorage.setItem("token", token);
+    window.location.assign("/index.html");
   }
 };
