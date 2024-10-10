@@ -12,4 +12,3 @@ class InputBox extends HTMLElement {
 }
 
 customElements.define("form-input", InputBox);
-console.log("111");

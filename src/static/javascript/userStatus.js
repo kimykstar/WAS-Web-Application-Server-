@@ -4,7 +4,8 @@ export const isLoggedIn = async () => {
   });
 
   if (response.statusCode === 200) {
-    return true;
+    if (response.body === "authorized") return true;
+    return false;
   }
   return false;
 };

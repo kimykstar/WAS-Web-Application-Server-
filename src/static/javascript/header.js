@@ -1,9 +1,11 @@
 import { isLoggedIn } from "./userStatus.js";
 
 class Header extends HTMLElement {
-  connectedCallback() {
+  async connectedCallback() {
     this.setAttribute("class", "navbar");
-    if (isLoggedIn()) {
+    const flag = await isLoggedIn();
+    console.log(flag);
+    if (flag) {
       this.innerHTML = `
         <div>HELLO, WEB!</div>
         <div>

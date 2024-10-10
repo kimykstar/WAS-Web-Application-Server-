@@ -1,6 +1,5 @@
 import "./header.js";
 import "./inputBox.js";
-// import { userStatus } from "./UserStatus.js";
 
 document.querySelector(".loginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -28,7 +27,6 @@ const handleLoginResponse = (response) => {
   const statusCode = response.status;
 
   if (statusCode === 200) {
-    debugger;
     const redirectionPath = response.url;
     window.location.assign(redirectionPath);
   }
