@@ -24,14 +24,10 @@ export const getResponseByUri = async (request: Request): Promise<Buffer> => {
   const api = router.getApi(httpMethod, uri);
 
   if (httpMethod === "GET" && api) {
-    const queryParams = request.getQueryParams();
-    return createOkResponse(
-      api(queryParams, request.getCookie().getCookieValue("session_id")),
-      "TEXT_UTF8"
-    );
+    return createOkResponse(api(request), "TEXT_UTF8");
   }
   if (httpMethod === "POST" && api) {
-    return await api(reqBody);
+    return await api(request);
   }
 
   throw new NotFoundUriException();

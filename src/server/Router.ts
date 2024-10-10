@@ -1,15 +1,13 @@
 import { DuplicateApiException } from "../exception/LogicException.ts";
+import Request from "../server/Request.ts";
 
 class Router {
-  private readonly apis: Record<
-    string,
-    Map<RegExp, (queryParams?: Record<string, string>, authorized?: string) => Buffer>
-  > = {
+  private readonly apis: Record<string, Map<RegExp, (request: Request) => Buffer>> = {
     GET: new Map(),
     POST: new Map(),
   };
 
-  addApi(method: string, uriRegex: RegExp, api: (queryParams?: Record<string, string>, authorized?: string) => Buffer) {
+  addApi(method: string, uriRegex: RegExp, api: (request: Request) => Buffer) {
     const apis = this.apis[method];
 
     if (apis.has(uriRegex)) {

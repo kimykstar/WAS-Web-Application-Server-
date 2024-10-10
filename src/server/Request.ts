@@ -67,7 +67,7 @@ export default class Request {
     if (this.isExistCookieHeader()) {
       const cookies = this.getRequestHeader("Cookie")?.split("; ");
       for (const cookie of cookies) {
-        if (cookie.startsWith("session_id=")) {
+        if (cookie.startsWith("SID=")) {
           return cookie.split("=")[1];
         }
       }

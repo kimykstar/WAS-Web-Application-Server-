@@ -80,9 +80,17 @@ const createLoginSessionCookie = (userEmail: string) => {
   const uuid = createUUID();
   sessionManager.createSession(uuid, userEmail);
   setCookie
-    .setCookieData("session_id", uuid)
+    .setCookieData("SID", uuid)
     .setCookieAttr("path", "/")
     .setCookieAttr("HttpOnly")
     .setCookieAttr("Max-Age", "3600");
   return setCookie.getSetCookieHeaderValue();
+};
+
+export const createUserTokenResponse = (redirectPath: string, userEmail: string) => {
+  const response = new Response();
+  const tokenId = createUUID();
+  sessionManager.createSession(tokenId, userEmail);
+  response.setStatusCode(StatusCodes.OK).setBody(tokenId);
+  return response.getResponse();
 };
