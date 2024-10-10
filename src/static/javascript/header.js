@@ -1,10 +1,9 @@
-class Header extends HTMLElement {
-  #session;
+import { isLoggedIn } from "./userStatus.js";
 
+class Header extends HTMLElement {
   connectedCallback() {
-    this.#session = this.#getCurrentSession();
     this.setAttribute("class", "navbar");
-    if (this.#session) {
+    if (isLoggedIn()) {
       this.innerHTML = `
         <div>HELLO, WEB!</div>
         <div>
@@ -22,14 +21,6 @@ class Header extends HTMLElement {
     this.#addHandlers();
   }
 
-  #getCurrentSession() {
-    const cookies = document.cookie;
-    cookies
-      .split(";")
-      .map((cookie) => cookie.split("="))
-      .find(([key, value]) => key === "session_id");
-  }
-
   #addHandlers() {
     this.querySelector(".signupBtn").addEventListener("click", () => {
       location.assign("/user/login.html");
@@ -38,4 +29,3 @@ class Header extends HTMLElement {
 }
 
 customElements.define("page-header", Header);
-console.log(document.cookie);

@@ -4,6 +4,7 @@ export default class Request {
   private uri: string = "";
   private queryParams: Record<string, string> = {};
   private header: Record<string, string> = {};
+  private sessionID: string = "";
   private body: Record<string, string> = {};
 
   constructor(request: string) {
@@ -50,6 +51,17 @@ export default class Request {
         reducerObj[key.trim()] = value.trim();
         return reducerObj;
       }, this.header);
+    this.setSessionId();
+  }
+
+  private setSessionId() {
+    const cookies = this.getRequestHeader("Cookie").split("; ");
+    for (const cookie of cookies) {
+      if (cookie.startsWith("session_id=")) {
+        return cookie.split("=")[1];
+      }
+    }
+    return null;
   }
 
   private parseBody(body: string) {
@@ -62,8 +74,8 @@ export default class Request {
     return [this.httpMethod, this.uri, this.version];
   }
 
-  getRequestHeader() {
-    return this.header;
+  getRequestHeader(key: string) {
+    return this.header[key];
   }
 
   getQueryParams() {
@@ -72,5 +84,9 @@ export default class Request {
 
   getBodyContent() {
     return this.body;
+  }
+
+  getSessionId() {
+    return this.sessionID;
   }
 }

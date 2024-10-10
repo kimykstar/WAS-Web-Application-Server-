@@ -27,3 +27,19 @@
   height: 4rem;
   border-radius: var(--rounded-sm);
 }
+
+.myPageBtn {
+  background-color: var(--accent-blue);
+  color: var(--gray-50);
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.8rem 1.6rem;
+}
+
+.logOutBtn {
+  background-color: var(--accent-blue);
+  color: var(--gray-50);
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.8rem 1.6rem;
+}
