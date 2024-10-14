@@ -1,7 +1,11 @@
 import { GetMapping, PostMapping } from "../decorator/apiDecorator.ts";
 import { lowdbDao } from "../../DB/LowdbDao.ts";
 import { User } from "../domain/User.ts";
-import { createRedirectionResponse, createUserTokenResponse } from "../server/responseCreator.ts";
+import {
+  createRedirectionResponse,
+  createUserTokenResponse,
+  createOkResponse,
+} from "../server/responseCreator.ts";
 import Request from "../server/Request.ts";
 import { sessionManager } from "../server/SessionManager.ts";
 
@@ -14,20 +18,20 @@ class UserController {
     if (token !== "null") {
       // ToDo: SessionId검증 로직 추가
       bodyContent = "authorized";
-      return bodyContent;
     }
-    return bodyContent;
+    return createOkResponse(bodyContent, "TEXT_UTF8");
   }
 
   @GetMapping("/logout")
   logout(request: Request) {
     const authHeader = request.getRequestHeader("Authorization");
     const [type, token] = authHeader?.split(" ") ?? [];
+    let bodyContent = "success";
     if (token !== "null") {
       sessionManager.deleteSession(token);
-      return "success";
+      bodyContent = "success";
     }
-    return "fail";
+    return createOkResponse(bodyContent, "TEXT_UTF8");
   }
 
   @PostMapping("/create")
