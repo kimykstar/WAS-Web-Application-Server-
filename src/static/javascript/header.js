@@ -30,7 +30,6 @@ class Header extends HTMLElement {
   }
 
   #addLogOutHandlers() {
-    console.log(this.querySelector(".logout-btn"));
     this.querySelector(".logout-btn").addEventListener("click", async () => {
       const token = sessionStorage.getItem("token");
       if (token) {

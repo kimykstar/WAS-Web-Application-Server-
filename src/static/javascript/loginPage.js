@@ -1,8 +1,7 @@
-import { URLSearchParams } from "url";
 import "./header.js";
 import "./inputBox.js";
 
-document.querySelector(".loginForm").addEventListener("submit", async (event) => {
+document.querySelector(".login-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = getLoginFormData();
   const response = await fetch("/login", {
@@ -22,7 +21,7 @@ const getLoginFormData = () => {
   });
   const searchParams = new URLSearchParams(formData);
 
-  return searchParams.toString;
+  return searchParams.toString();
 };
 
 const handleLoginResponse = async (response) => {
