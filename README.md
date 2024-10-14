@@ -2,9 +2,9 @@
 
 ## 월(241014)
 
-- 코드 리팩토링
+- [ ] 코드 리팩토링
   - [x] URIProcessor리팩토링
-  - [ ] UserController리팩토링
+  - [x] UserController리팩토링
   - [ ] UserStatus.js리팩토링
   - [ ] API응답 에러 처리
   - [ ] 그 외 리팩토링
