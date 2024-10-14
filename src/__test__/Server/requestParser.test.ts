@@ -1,4 +1,4 @@
-import { getUriFromRequest } from "../../server/requestParser.ts";
+import { getUriFromRequest } from "../../server/components/helper/requestParser.ts";
 
 describe("URI Parsing", () => {
   it("No querystring test", () => {

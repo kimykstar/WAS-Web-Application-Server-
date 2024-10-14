@@ -1,4 +1,4 @@
-import Cookie from "../server/Cookie.ts";
+import Cookie from "./Cookie.ts";
 
 export default class Request {
   private httpMethod: string = "";

@@ -1,6 +1,6 @@
 import fs from "fs";
-import Request from "../server/Request.ts";
-import { createOkResponse } from "../server/responseCreator.ts";
+import Request from "../../httpDomain/Request.ts";
+import { createOkResponse } from "../helper/responseCreator.ts";
 
 const STATIC_FILE_PATH: string = "./src/static";
 
@@ -11,9 +11,8 @@ Object.freeze(VALID_FILE_EXTENSION);
 
 export const getStaticFileContent = (request: Request): Buffer | null => {
   const [httpMethod, uri, version] = request.getRequestInfo();
-  if (isIndexRequest(uri)) return readStaticFile("/index.html");
+  if (isIndexRequest(uri)) return createOkResponse(readStaticFile("/index.html"), "HTML");
   if (isValidExtension(uri) && isExistStaticFile(uri))
-    // 확장자에 따른 선택 해주어야함..
     return createOkResponse(readStaticFile(uri), getFileNameAndExtension(uri).toUpperCase());
   return null;
 };

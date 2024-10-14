@@ -5,9 +5,11 @@ import {
   createRedirectionResponse,
   createUserTokenResponse,
   createOkResponse,
-} from "../server/responseCreator.ts";
-import Request from "../server/Request.ts";
-import { sessionManager } from "../server/SessionManager.ts";
+  createUnAuthResponse,
+  createForbiddenResponse,
+} from "../server/components/helper/responseCreator.ts";
+import Request from "../server/httpDomain/Request.ts";
+import { sessionManager } from "../server/components/helper/SessionManager.ts";
 
 class UserController {
   @GetMapping("/loginCheck")
@@ -15,11 +17,11 @@ class UserController {
     const authHeader = request.getRequestHeader("Authorization");
     const [type, token] = authHeader?.split(" ") ?? [];
     let bodyContent: string = "unauthorized";
-    if (token !== "null") {
-      // ToDo: SessionId검증 로직 추가
+    if (token !== "null" && sessionManager.isExistSession(token)) {
       bodyContent = "authorized";
+      return createOkResponse(bodyContent, "TEXT_UTF8");
     }
-    return createOkResponse(bodyContent, "TEXT_UTF8");
+    return createForbiddenResponse();
   }
 
   @GetMapping("/logout")
@@ -27,7 +29,7 @@ class UserController {
     const authHeader = request.getRequestHeader("Authorization");
     const [type, token] = authHeader?.split(" ") ?? [];
     let bodyContent = "success";
-    if (token !== "null") {
+    if (token !== "null" && sessionManager.isExistSession(token)) {
       sessionManager.deleteSession(token);
       bodyContent = "success";
     }
@@ -47,7 +49,7 @@ class UserController {
     if (typeof record === "object" && password === record["password"]) {
       return createUserTokenResponse("/index.html", email);
     }
-    return createRedirectionResponse("/user/login_failed.html");
+    return createUnAuthResponse();
   }
 }
 

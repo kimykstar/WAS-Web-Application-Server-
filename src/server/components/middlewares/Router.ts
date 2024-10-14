@@ -1,5 +1,5 @@
-import { DuplicateApiException } from "../exception/LogicException.ts";
-import Request from "../server/Request.ts";
+import { DuplicateApiException } from "../../../exception/LogicException.ts";
+import Request from "../../httpDomain/Request.ts";
 
 class Router {
   private readonly apis: Record<string, Map<RegExp, (request: Request) => Buffer>> = {

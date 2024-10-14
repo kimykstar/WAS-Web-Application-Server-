@@ -1,4 +1,4 @@
-import SetCookie from "../../server/SetCookie.ts";
+import SetCookie from "../../server/httpDomain/SetCookie.ts";
 import { v4 as createUUID } from "uuid";
 
 describe("Response's set-cookie header make test", () => {

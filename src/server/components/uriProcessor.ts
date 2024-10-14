@@ -1,7 +1,7 @@
-import { NotFoundUriException } from "../exception/HttpException.ts";
-import { router } from "./Router.ts";
-import { getStaticFileContent } from "./staticFileManager.ts";
-import Request from "../server/Request.ts";
+import { NotFoundUriException } from "../../exception/HttpException.ts";
+import { router } from "./middlewares/Router.ts";
+import { getStaticFileContent } from "./middlewares/staticFileManager.ts";
+import Request from "../httpDomain/Request.ts";
 
 export const getResponseByUri = async (request: Request): Promise<Buffer> => {
   const staticFileResponse = getStaticFileContent(request);

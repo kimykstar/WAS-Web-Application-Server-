@@ -1,12 +1,11 @@
-import { getReasonPhrase, StatusCodes } from "http-status-codes";
-import { UnsupportedMimeTypeException } from "../exception/HttpException.ts";
-import Response from "../server/Response.ts";
-import SetCookie from "./SetCookie.ts";
+import { StatusCodes } from "http-status-codes";
 import { v4 as createUUID } from "uuid";
-import { sessionManager } from "./SessionManager.ts";
+import Response from "../../httpDomain/Response.ts";
+import { sessionManager } from "../SessionManager.ts";
+import SetCookie from "../../httpDomain/SetCookie.ts";
 
 const MIME: Record<string, string> = Object.freeze({
-  TEXT_UTF8: "text/plain;",
+  TEXT_UTF8: "text/plain;charset=utf-8",
   HTML: "text/html",
   CSS: "text/css",
   JS: "text/javascript",
@@ -14,36 +13,6 @@ const MIME: Record<string, string> = Object.freeze({
   PNG: "image/png",
   JPG: "image/jpeg",
 });
-
-const CRLF = "\r\n";
-
-const createResponseStatusLine = (statusCode: number) => {
-  return `HTTP/1.1 ${statusCode} ${getReasonPhrase(statusCode)}\r\n`;
-};
-
-const createContentType = (fileExtension: string) => {
-  const mimeType = MIME[fileExtension.toUpperCase()];
-
-  if (mimeType === undefined) {
-    throw new UnsupportedMimeTypeException();
-  }
-
-  return `Content-Type: ${mimeType}\r\n`;
-};
-
-const createHeaderAttr = (key: string, value: string) => {
-  return `${key}: ${value}\r\n`;
-};
-
-const createHeader = (fileExtension: string): Buffer => {
-  const headerText = [
-    createResponseStatusLine(StatusCodes.OK),
-    createContentType(fileExtension),
-    CRLF,
-  ].join("");
-
-  return Buffer.from(headerText);
-};
 
 export const createOkResponse = (responseBody: Buffer | string, fileExtension: string): Buffer => {
   const response = new Response();
@@ -92,5 +61,17 @@ export const createUserTokenResponse = (redirectPath: string, userEmail: string)
   const tokenId = createUUID();
   sessionManager.createSession(tokenId, userEmail);
   response.setStatusCode(StatusCodes.OK).setBody(tokenId);
+  return response.getResponse();
+};
+
+export const createUnAuthResponse = () => {
+  const response = new Response();
+  response.setStatusCode(StatusCodes.UNAUTHORIZED);
+  return response.getResponse();
+};
+
+export const createForbiddenResponse = () => {
+  const response = new Response();
+  response.setStatusCode(StatusCodes.FORBIDDEN);
   return response.getResponse();
 };

@@ -1,5 +1,5 @@
 import { InvalidRegexException } from "../exception/LogicException.ts";
-import { router } from "../server/Router.ts";
+import { router } from "../server/components/middlewares/Router.ts";
 
 const URI_VALID_REGEX = /^(\/[^\/]+)+/;
 
@@ -24,7 +24,6 @@ export const GetMapping = (uri: string) => {
   };
 };
 
-
 export const PostMapping = (uri: string) => {
   if (!URI_VALID_REGEX.test(uri)) {
     throw new InvalidRegexException(uri);
@@ -32,5 +31,5 @@ export const PostMapping = (uri: string) => {
 
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     router.addApi("POST", new RegExp(uri), descriptor.value);
-  }
-}
+  };
+};

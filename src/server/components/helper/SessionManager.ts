@@ -5,9 +5,8 @@ const SESSION_EXPIRATION_TIME = MINUTE;
 class SessionManager {
   private sessions: Record<string, string>;
   private expirationTime: number = SESSION_EXPIRATION_TIME;
-  // ToDo: singleton
   constructor() {
-    this.sessions = {}; // SessionId: email형태로 저장
+    this.sessions = {};
   }
 
   setExpirationTime(expirationTime: number) {

@@ -1,4 +1,4 @@
-import { sessionManager, SECOND } from "../../server/SessionManager";
+import { sessionManager, SECOND } from "../../server/components/helper/SessionManager";
 import { v4 as createUUID } from "uuid";
 
 describe("SessionManager session test", () => {

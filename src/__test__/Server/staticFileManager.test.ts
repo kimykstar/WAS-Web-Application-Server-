@@ -1,6 +1,6 @@
-import { getStaticFileContent } from "../../server/staticFileManager.ts";
+import { getStaticFileContent } from "../../server/components/middlewares/staticFileManager.ts";
 import fs from "fs";
-import Request from "../../server/Request.ts";
+import Request from "../../server/httpDomain/Request.ts";
 
 describe("Static file manager test", () => {
   it.each([
