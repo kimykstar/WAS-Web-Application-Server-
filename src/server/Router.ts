@@ -24,6 +24,12 @@ class Router {
       }
     }
   }
+
+  processApi(request: Request) {
+    const [httpMethod, uri, version] = request.getRequestInfo();
+    const apiController = this.getApi(httpMethod, uri);
+    return apiController ? apiController(request) : null;
+  }
 }
 
 export const router = new Router();
