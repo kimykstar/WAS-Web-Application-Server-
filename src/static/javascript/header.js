@@ -31,7 +31,7 @@ class Header extends HTMLElement {
 
   #addLogOutHandlers() {
     this.querySelector(".logout-btn").addEventListener("click", async () => {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (token) {
         const response = await fetch("/logout", {
           method: "GET",
@@ -40,7 +40,7 @@ class Header extends HTMLElement {
           },
         });
         if (response.status === 200) {
-          sessionStorage.removeItem("token");
+          localStorage.removeItem("token");
           location.reload();
         }
       }

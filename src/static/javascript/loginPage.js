@@ -4,11 +4,21 @@ import "./inputBox.js";
 document.querySelector(".login-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = getLoginFormData();
-  const response = await fetch("/login", {
-    method: "POST",
-    body: formData,
-  });
-  await handleLoginResponse(response);
+  try {
+    const response = await fetch("/login", {
+      method: "POST",
+      body: formData,
+    });
+    const token = await response.text();
+    if (response.status === 200) {
+      localStorage.setItem("token", token);
+      window.location.assign("/index.html");
+    } else if (response.status === 401) {
+      alert("아이디 혹은 비밀번호가 틀렸습니다.");
+    }
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 const getLoginFormData = () => {
@@ -22,13 +32,4 @@ const getLoginFormData = () => {
   const searchParams = new URLSearchParams(formData);
 
   return searchParams.toString();
-};
-
-const handleLoginResponse = async (response) => {
-  const statusCode = response.status;
-  const token = await response.text();
-  if (statusCode === 200) {
-    sessionStorage.setItem("token", token);
-    window.location.assign("/index.html");
-  }
 };
