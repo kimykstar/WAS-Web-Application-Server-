@@ -12,24 +12,15 @@ export default class SetCookie {
     return this;
   }
 
-  setCookieAttr(key: string, value?: string) {
-    if (value) {
-      this.options[key] = value;
-    } else {
-      this.options[key] = "";
-    }
+  setCookieAttr(key: string, value: string = "") {
+    this.options[key] = value;
 
     return this;
   }
 
   getSetCookieHeaderValue() {
     const options = Object.entries(this.options)
-      .map(([key, value]) => {
-        if (value === "") {
-          return key;
-        }
-        return `${key}=${value}`;
-      })
+      .map(([key, value]) => (value ? `${key}=${value}` : key))
       .join("; ");
     return `${this.dataKey}=${this.dataValue}; ${options}`;
   }

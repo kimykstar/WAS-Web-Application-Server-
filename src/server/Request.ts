@@ -78,8 +78,8 @@ export default class Request {
 
   private isExistCookieHeader() {
     const cookie = this.getRequestHeader("Cookie");
-    if (cookie) return cookie;
-    return undefined;
+    if (cookie) return true;
+    return false;
   }
 
   private parseBody(body: string) {

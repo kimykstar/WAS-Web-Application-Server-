@@ -1,4 +1,4 @@
-.signupBtn {
+.signup-btn {
   background-color: var(--accent-blue);
   color: var(--gray-50);
   border-radius: 0.8rem;
@@ -13,7 +13,7 @@
   align-items: center;
 }
 
-.myPageBtn {
+.mypage-btn {
   background-color: var(--accent-blue);
   color: var(--gray-50);
   border-radius: 0.8rem;
@@ -21,7 +21,7 @@
   padding: 0.8rem 1.6rem;
 }
 
-.logOutBtn {
+.logout-btn {
   background-color: var(--accent-blue);
   color: var(--gray-50);
   border-radius: 0.8rem;
@@ -29,7 +29,7 @@
   padding: 0.8rem 1.6rem;
 }
 
-.rightContainer {
+.right-container {
   display: flex;
   flex-direction: row;
   gap: 1.6rem;

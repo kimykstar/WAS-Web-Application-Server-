@@ -7,10 +7,10 @@ class Header extends HTMLElement {
     if (flag) {
       this.innerHTML = `
         <div>HELLO, WEB!</div>
-        <div class='rightContainer'>
+        <div class='right-container'>
           <p>멤버리스트</p>
-          <button type="button" class="myPageBtn">마이페이지</button>
-          <button type="button" class="logOutBtn">로그아웃</button>
+          <button type="button" class="mypage-btn">마이페이지</button>
+          <button type="button" class="logout-btn">로그아웃</button>
         </div>
       `;
       this.#addLogOutHandlers();
@@ -18,30 +18,32 @@ class Header extends HTMLElement {
     }
     this.innerHTML = `
       <div>HELLO, WEB!</div>
-      <button type="button" class="signupBtn">로그인/회원가입</button>
+      <button type="button" class="signup-btn">로그인/회원가입</button>
     `;
     this.#addHandlers();
   }
 
   #addHandlers() {
-    this.querySelector(".signupBtn").addEventListener("click", () => {
+    this.querySelector(".signup-btn").addEventListener("click", () => {
       location.assign("/user/login.html");
     });
   }
 
   #addLogOutHandlers() {
-    console.log(this.querySelector(".logOutBtn"));
-    this.querySelector(".logOutBtn").addEventListener("click", async () => {
+    console.log(this.querySelector(".logout-btn"));
+    this.querySelector(".logout-btn").addEventListener("click", async () => {
       const token = sessionStorage.getItem("token");
-      const response = await fetch("/logout", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.status === 200) {
-        sessionStorage.removeItem("token");
-        location.reload();
+      if (token) {
+        const response = await fetch("/logout", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.status === 200) {
+          sessionStorage.removeItem("token");
+          location.reload();
+        }
       }
     });
   }

@@ -1,3 +1,4 @@
+import { URLSearchParams } from "url";
 import "./header.js";
 import "./inputBox.js";
 
@@ -17,10 +18,11 @@ const getLoginFormData = () => {
   inputs.forEach((input) => {
     const key = input.getAttribute("name");
     const value = input.value;
-    formData.push([key, value].join("="));
+    formData.push([key, value]);
   });
+  const searchParams = new URLSearchParams(formData);
 
-  return formData.join("&");
+  return searchParams.toString;
 };
 
 const handleLoginResponse = async (response) => {

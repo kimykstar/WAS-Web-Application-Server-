@@ -3,23 +3,23 @@
 @import url(header.css);
 @import url(input.css);
 
-.signupForm {
+.signup-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.inputBox {
+.input-box {
   border-radius: var(--rounded-sm);
   width: 32rem;
   height: 6.4rem;
 }
 
-.signupTitle {
+.signup-title {
   text-align: center;
 }
 
-.signupFormBtn {
+.signup-form-btn {
   background-color: var(--accent-blue);
   width: 32rem;
   border: none;
