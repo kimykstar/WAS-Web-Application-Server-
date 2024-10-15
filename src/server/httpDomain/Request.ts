@@ -20,7 +20,6 @@ export default class Request {
     const body = request.substring(splitIndex + 4);
     this.parseHeader(header);
     this.parseBody(body);
-    console.log(body);
   }
 
   private parseHeader(header: string) {
@@ -89,9 +88,7 @@ export default class Request {
   private parseBody(body: string) {
     const contentType = this.getRequestHeader("Content-Type");
     if (contentType?.includes("multipart/form-data;")) {
-      const boundary = contentType.substring(contentType.indexOf("="));
-      console.log(boundary);
-      this.parsBodyToMultipart(body);
+      const boundary = `--${contentType.substring(contentType.indexOf("=") + 1)}`;
       const parts = new RequestBody().parseMultipartBody(boundary, body);
       console.log(parts);
     }
@@ -99,8 +96,6 @@ export default class Request {
       this.parseQueryParams(body, this.body);
     }
   }
-
-  private parsBodyToMultipart(bodyContent: string) {}
 
   getRequestInfo() {
     return [this.httpMethod, this.uri, this.version];

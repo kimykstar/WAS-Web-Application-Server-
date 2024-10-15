@@ -7,9 +7,10 @@ import Request from "./httpDomain/Request.ts";
 import "../controller/userController.ts";
 
 export const server = net.createServer((socket: any) => {
+  // chunk를 모아서 end에서 처리하도록
   socket.on("data", async (data: string) => {
     const requestText = data.toString();
-    // logger.http(requestText);
+    logger.http(requestText);
     const request = new Request(requestText);
     try {
       const response = await getResponseByUri(request);
