@@ -1,4 +1,5 @@
 import Cookie from "./Cookie.ts";
+import RequestBody from "./RequestBody.ts";
 
 export default class Request {
   private httpMethod: string = "";
@@ -14,9 +15,12 @@ export default class Request {
   }
 
   private parseToRequest(request: string) {
-    const [header, body] = request.split("\r\n\r\n");
+    const splitIndex = request.indexOf("\r\n\r\n");
+    const header = request.substring(0, splitIndex);
+    const body = request.substring(splitIndex + 4);
     this.parseHeader(header);
     this.parseBody(body);
+    console.log(body);
   }
 
   private parseHeader(header: string) {
@@ -83,10 +87,20 @@ export default class Request {
   }
 
   private parseBody(body: string) {
+    const contentType = this.getRequestHeader("Content-Type");
+    if (contentType?.includes("multipart/form-data;")) {
+      const boundary = contentType.substring(contentType.indexOf("="));
+      console.log(boundary);
+      this.parsBodyToMultipart(body);
+      const parts = new RequestBody().parseMultipartBody(boundary, body);
+      console.log(parts);
+    }
     if (body.length > 0) {
       this.parseQueryParams(body, this.body);
     }
   }
+
+  private parsBodyToMultipart(bodyContent: string) {}
 
   getRequestInfo() {
     return [this.httpMethod, this.uri, this.version];

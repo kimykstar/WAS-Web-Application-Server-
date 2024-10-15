@@ -7,7 +7,7 @@ const VALID_FILE_EXTENSION = ["css", "js", "html", "jpg", "png", "ico"];
 
 Object.freeze(VALID_FILE_EXTENSION);
 
-export const getStaticFileContent = (request: Request): Buffer | null => {
+export const getStaticFileResponse = (request: Request): Buffer | null => {
   const [httpMethod, uri, version] = request.getRequestInfo();
   if (isIndexRequest(uri)) return createOkResponse(readStaticFile("/index.html"), "HTML");
   if (isValidExtension(uri) && isExistStaticFile(uri))

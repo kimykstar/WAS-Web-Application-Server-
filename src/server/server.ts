@@ -9,7 +9,7 @@ import "../controller/userController.ts";
 export const server = net.createServer((socket: any) => {
   socket.on("data", async (data: string) => {
     const requestText = data.toString();
-    logger.http(requestText);
+    // logger.http(requestText);
     const request = new Request(requestText);
     try {
       const response = await getResponseByUri(request);
