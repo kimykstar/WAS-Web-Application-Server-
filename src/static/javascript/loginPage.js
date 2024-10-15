@@ -12,7 +12,7 @@ document.querySelector(".login-form").addEventListener("submit", async (event) =
     const token = await response.text();
     if (response.status === 200) {
       localStorage.setItem("token", token);
-      window.location.assign("/index.html");
+      location.assign("/index.html");
     } else if (response.status === 401) {
       alert("아이디 혹은 비밀번호가 틀렸습니다.");
     }

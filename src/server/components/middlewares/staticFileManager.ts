@@ -3,10 +3,8 @@ import Request from "../../httpDomain/Request.ts";
 import { createOkResponse } from "../helper/responseCreator.ts";
 
 const STATIC_FILE_PATH: string = "./src/static";
+const VALID_FILE_EXTENSION = ["css", "js", "html", "jpg", "png", "ico"];
 
-const VALID_FILE_EXTENSION: Array<string> = ["css", "js", "html", "jpg", "png", "ico"];
-
-Object.freeze(STATIC_FILE_PATH);
 Object.freeze(VALID_FILE_EXTENSION);
 
 export const getStaticFileContent = (request: Request): Buffer | null => {

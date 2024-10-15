@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import { v4 as createUUID } from "uuid";
 import Response from "../../httpDomain/Response.ts";
-import { sessionManager } from "../SessionManager.ts";
+import { sessionManager } from "./SessionManager.ts";
 import SetCookie from "../../httpDomain/SetCookie.ts";
 
-const MIME: Record<string, string> = Object.freeze({
+const MIME: Record<string, string> = {
   TEXT_UTF8: "text/plain;charset=utf-8",
   HTML: "text/html",
   CSS: "text/css",
@@ -12,7 +12,9 @@ const MIME: Record<string, string> = Object.freeze({
   ICO: "image/vnd.microsoft.icon",
   PNG: "image/png",
   JPG: "image/jpeg",
-});
+};
+
+Object.freeze(MIME);
 
 export const createOkResponse = (responseBody: Buffer | string, fileExtension: string): Buffer => {
   const response = new Response();
