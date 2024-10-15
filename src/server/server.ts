@@ -1,7 +1,7 @@
 import net from "net";
 import { logger } from "./components/helper/logger.ts";
 import { getResponseByUri } from "./components/uriProcessor.ts";
-import { createResponseByBadRequest } from "./components/helper/responseCreator.ts";
+import { createClientErrorResponse } from "./components/helper/responseCreator.ts";
 import { HttpException } from "../exception/HttpException.ts";
 import Request from "./httpDomain/Request.ts";
 import "../controller/userController.ts";
@@ -17,7 +17,7 @@ export const server = net.createServer((socket: any) => {
       socket.end();
     } catch (e: any) {
       if (e instanceof HttpException) {
-        const response = createResponseByBadRequest(e.getStatusCode(), e.message);
+        const response = createClientErrorResponse(e.getStatusCode(), e.message);
         socket.write(response);
         socket.end();
         return;

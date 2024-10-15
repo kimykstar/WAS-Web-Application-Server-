@@ -5,11 +5,11 @@ import {
   createRedirectionResponse,
   createUserTokenResponse,
   createOkResponse,
-  createUnAuthResponse,
-  createForbiddenResponse,
+  createClientErrorResponse,
 } from "../server/components/helper/responseCreator.ts";
 import Request from "../server/httpDomain/Request.ts";
 import { sessionManager } from "../server/components/helper/SessionManager.ts";
+import { StatusCodes } from "http-status-codes";
 
 class UserController {
   @GetMapping("/loginCheck")
@@ -21,7 +21,7 @@ class UserController {
       bodyContent = "authorized";
       return createOkResponse(bodyContent, "TEXT_UTF8");
     }
-    return createForbiddenResponse();
+    return createClientErrorResponse(StatusCodes.FORBIDDEN);
   }
 
   @GetMapping("/logout")
@@ -49,7 +49,7 @@ class UserController {
     if (typeof record === "object" && password === record["password"]) {
       return createUserTokenResponse("/index.html", email);
     }
-    return createUnAuthResponse();
+    return createClientErrorResponse(StatusCodes.UNAUTHORIZED);
   }
 }
 

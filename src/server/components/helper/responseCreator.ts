@@ -25,12 +25,6 @@ export const createOkResponse = (responseBody: Buffer | string, fileExtension: s
   return response.getResponse();
 };
 
-export const createResponseByBadRequest = (statusCode: number, message: string) => {
-  const response = new Response();
-  response.setStatusCode(statusCode).addHeader("content-type", MIME["TEXT_UTF8"]).setBody(message);
-  return response.getResponse();
-};
-
 export const createRedirectionResponse = (redirectPath: string) => {
   const response = new Response();
   response.setStatusCode(StatusCodes.MOVED_TEMPORARILY).addHeader("location", redirectPath);
@@ -66,14 +60,10 @@ export const createUserTokenResponse = (redirectPath: string, userEmail: string)
   return response.getResponse();
 };
 
-export const createUnAuthResponse = () => {
+export const createClientErrorResponse = (statusCode: number, bodyContent = "") => {
   const response = new Response();
-  response.setStatusCode(StatusCodes.UNAUTHORIZED);
-  return response.getResponse();
-};
-
-export const createForbiddenResponse = () => {
-  const response = new Response();
-  response.setStatusCode(StatusCodes.FORBIDDEN);
-  return response.getResponse();
+  response.setStatusCode(statusCode);
+  return !bodyContent
+    ? response.addHeader("content-type", MIME["TEXT_UTF8"]).setBody(bodyContent).getResponse()
+    : response.getResponse();
 };

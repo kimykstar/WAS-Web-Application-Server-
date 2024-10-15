@@ -1,10 +1,9 @@
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
-const SESSION_EXPIRATION_TIME = MINUTE;
 
 class SessionManager {
   private sessions: Record<string, string>;
-  private expirationTime: number = SESSION_EXPIRATION_TIME;
+  private expirationTime: number = MINUTE;
   constructor() {
     this.sessions = {};
   }
@@ -46,4 +45,4 @@ class SessionManager {
 
 const sessionManager = new SessionManager();
 
-export { sessionManager, SECOND, MINUTE, SESSION_EXPIRATION_TIME };
+export { sessionManager, SECOND, MINUTE };
