@@ -41,3 +41,9 @@ const getFileNameAndExtension = (uri: string) => {
   const [, extension] = uri.split(".");
   return extension;
 };
+
+export const writeFile = (fileName: string, fileContent: string) => {
+  fs.writeFile(`${STATIC_FILE_PATH}/images/${fileName}`, Buffer.from(fileContent), () => {
+    console.log(`${fileName}의 저장이 완료되었습니다.`);
+  });
+};
