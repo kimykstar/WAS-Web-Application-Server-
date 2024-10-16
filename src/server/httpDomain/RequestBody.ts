@@ -8,7 +8,7 @@ export default class RequestBody {
 
     const result = this.parseParts(parts.slice(1, -1));
     this.bodyContent = result;
-    console.log(result[2].data);
+    console.log(result[2]);
 
     return this.bodyContent;
   }
@@ -20,7 +20,10 @@ export default class RequestBody {
   private parseParts(parts: Array<string>) {
     let match;
     return parts
-      .map((part) => part.split("\r\n\r\n"))
+      .map((part) => {
+        const headerEndIndex = part.indexOf("\r\n\r\n");
+        return [part.slice(0, headerEndIndex), part.slice(headerEndIndex + 4)];
+      })
       .reduce((reducer: Array<Record<string, string>>, [header, body]) => {
         const obj: Record<string, string> = {};
         while ((match = REGEX.exec(header)) !== null) {

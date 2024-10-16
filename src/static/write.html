@@ -6,11 +6,12 @@
     <title>Document</title>
   </head>
   <body>
-    <form method="post" action="/upload" enctype="multipart/form-data">
+    <form class="upload-form" method="post" action="/upload" enctype="multipart/form-data">
       <input type="text" name="title" placeholder="글의 제목을 입력하세요" />
       <input type="text" name="content" placeholder="글의 내용을 입력하세요" />
-      <input type="file" name="file" />
+      <input class="file-input" type="file" name="file" />
       <button type="submit" class="write-complete-btn">완료</button>
     </form>
+    <script type="module" src="./javascript/writePage.js"></script>
   </body>
 </html>

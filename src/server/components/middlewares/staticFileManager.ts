@@ -43,7 +43,11 @@ const getFileNameAndExtension = (uri: string) => {
 };
 
 export const writeFile = (fileName: string, fileContent: string) => {
-  fs.writeFile(`${STATIC_FILE_PATH}/images/${fileName.slice(1, -1)}`, Buffer.from(fileContent), () => {
-    console.log(`${fileName.slice(1, -1)}의 저장이 완료되었습니다.`);
-  });
+  fs.writeFile(
+    `${STATIC_FILE_PATH}/images/${fileName.slice(1, -1)}`,
+    Buffer.from(fileContent),
+    () => {
+      console.log(`${fileName.slice(1, -1)}의 저장이 완료되었습니다.`);
+    }
+  );
 };
