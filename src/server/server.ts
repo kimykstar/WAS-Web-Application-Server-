@@ -8,19 +8,19 @@ import "../controller/userController.ts";
 import "../controller/postingController.ts";
 
 export const server = net.createServer((socket: any) => {
-  let reqeustBuffer = Buffer.alloc(0);
+  let requestBuffer = Buffer.alloc(0);
   let contentLength: number | null = null;
   let headerParsed = false;
 
   // chunk를 모아서 end에서 처리하도록
   socket.on("data", async (data: Buffer) => {
-    reqeustBuffer = Buffer.concat([reqeustBuffer, data]);
+    requestBuffer = Buffer.concat([requestBuffer, data]);
 
     if (!headerParsed) {
       logger.http(data.toString());
-      const headerEndIndex = reqeustBuffer.indexOf("\r\n\r\n");
+      const headerEndIndex = requestBuffer.indexOf("\r\n\r\n");
       if (headerEndIndex !== -1) {
-        const headers = reqeustBuffer.subarray(0, headerEndIndex).toString();
+        const headers = requestBuffer.subarray(0, headerEndIndex).toString();
         const match = headers.match(/Content-Length:\s*(\d+)/i);
         contentLength = match ? parseInt(match[1], 10) : null;
       }
@@ -29,9 +29,10 @@ export const server = net.createServer((socket: any) => {
 
     if (
       headerParsed &&
-      (contentLength === null || reqeustBuffer.length >= contentLength + reqeustBuffer.indexOf("\r\n\r\n") + 4)
+      (contentLength === null ||
+        requestBuffer.length >= contentLength + requestBuffer.indexOf("\r\n\r\n") + 4)
     ) {
-      const requestText = reqeustBuffer.toString();
+      const requestText = requestBuffer.toString();
       logger.http(requestText);
       try {
         const request = new Request(requestText);
@@ -48,7 +49,7 @@ export const server = net.createServer((socket: any) => {
 
         throw e;
       } finally {
-        reqeustBuffer = Buffer.alloc(0);
+        requestBuffer = Buffer.alloc(0);
         contentLength = null;
         headerParsed = false;
       }
