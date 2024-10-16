@@ -13,6 +13,7 @@ export default class RequestBody {
 
     const result = this.parseParts(parts.slice(1, -1));
     this.bodyContent = result;
+    console.log(result[2].data);
 
     return this.bodyContent;
   }
