@@ -54,8 +54,10 @@ export const writeFile = (fileName: string | Buffer, fileContent: string | Buffe
     Buffer.from(fileContent),
     () => {
       console.log(`${fileName.slice(1, -1)}의 저장이 완료되었습니다.`);
-      return true;
     }
   );
-  return false;
+};
+
+export const isUploadedFileExist = (fileName: string | Buffer): Boolean => {
+  return fs.existsSync(`${STATIC_FILE_PATH}/images/${fileName.slice(1, -1)}`);
 };

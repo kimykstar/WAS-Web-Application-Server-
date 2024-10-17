@@ -4,7 +4,10 @@ import {
   createOkResponse,
   createServerErrorResponse,
 } from "../server/components/helper/responseCreator.ts";
-import { writeFile } from "../server/components/middlewares/staticFileManager.ts";
+import {
+  writeFile,
+  isUploadedFileExist,
+} from "../server/components/middlewares/staticFileManager.ts";
 import Request from "../server/httpDomain/Request.ts";
 
 class PostingController {
@@ -13,8 +16,10 @@ class PostingController {
     const reqBody = request.getMultipartBody();
     const [, , file] = reqBody;
     const { filename, data } = file;
-    return writeFile(filename, data)
-      ? createOkResponse(StatusCodes.CREATED, "", "TEXT_UTF8")
+    writeFile(filename, data);
+    console.log(isUploadedFileExist(filename));
+    return isUploadedFileExist(filename)
+      ? createOkResponse(StatusCodes.OK, "", "TEXT_UTF8")
       : createServerErrorResponse(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
