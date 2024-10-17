@@ -16,10 +16,14 @@ const MIME: Record<string, string> = {
 
 Object.freeze(MIME);
 
-export const createOkResponse = (responseBody: Buffer | string, fileExtension: string): Buffer => {
+export const createOkResponse = (
+  statusCode: number,
+  responseBody: Buffer | string,
+  fileExtension: string
+): Buffer => {
   const response = new Response();
   response
-    .setStatusCode(StatusCodes.OK)
+    .setStatusCode(statusCode)
     .addHeader("content-type", MIME[fileExtension])
     .setBody(responseBody);
   return response.getResponse();
@@ -61,6 +65,14 @@ export const createUserTokenResponse = (redirectPath: string, userEmail: string)
 };
 
 export const createClientErrorResponse = (statusCode: number, bodyContent = "") => {
+  const response = new Response();
+  response.setStatusCode(statusCode);
+  return !bodyContent
+    ? response.addHeader("content-type", MIME["TEXT_UTF8"]).setBody(bodyContent).getResponse()
+    : response.getResponse();
+};
+
+export const createServerErrorResponse = (statusCode: number, bodyContent: string = "") => {
   const response = new Response();
   response.setStatusCode(statusCode);
   return !bodyContent

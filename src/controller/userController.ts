@@ -19,7 +19,7 @@ class UserController {
     let bodyContent: string = "unauthorized";
     if (token !== "null" && sessionManager.isExistSession(token)) {
       bodyContent = "authorized";
-      return createOkResponse(bodyContent, "TEXT_UTF8");
+      return createOkResponse(StatusCodes.OK, bodyContent, "TEXT_UTF8");
     }
     return createClientErrorResponse(StatusCodes.FORBIDDEN);
   }
@@ -33,7 +33,7 @@ class UserController {
       sessionManager.deleteSession(token);
       bodyContent = "success";
     }
-    return createOkResponse(bodyContent, "TEXT_UTF8");
+    return createOkResponse(StatusCodes.OK, bodyContent, "TEXT_UTF8");
   }
 
   @PostMapping("/create")

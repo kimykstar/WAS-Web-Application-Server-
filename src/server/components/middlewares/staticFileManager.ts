@@ -1,6 +1,7 @@
 import fs from "fs";
 import Request from "../../httpDomain/Request.ts";
 import { createOkResponse } from "../helper/responseCreator.ts";
+import { StatusCodes } from "http-status-codes";
 
 const STATIC_FILE_PATH: string = "./src/static";
 const VALID_FILE_EXTENSION = ["css", "js", "html", "jpg", "png", "ico"];
@@ -9,9 +10,14 @@ Object.freeze(VALID_FILE_EXTENSION);
 
 export const getStaticFileResponse = (request: Request): Buffer | null => {
   const [httpMethod, uri, version] = request.getRequestInfo();
-  if (isIndexRequest(uri)) return createOkResponse(readStaticFile("/index.html"), "HTML");
+  if (isIndexRequest(uri))
+    return createOkResponse(StatusCodes.OK, readStaticFile("/index.html"), "HTML");
   if (isValidExtension(uri) && isExistStaticFile(uri))
-    return createOkResponse(readStaticFile(uri), getFileNameAndExtension(uri).toUpperCase());
+    return createOkResponse(
+      StatusCodes.OK,
+      readStaticFile(uri),
+      getFileNameAndExtension(uri).toUpperCase()
+    );
   return null;
 };
 
@@ -48,6 +54,8 @@ export const writeFile = (fileName: string | Buffer, fileContent: string | Buffe
     Buffer.from(fileContent),
     () => {
       console.log(`${fileName.slice(1, -1)}의 저장이 완료되었습니다.`);
+      return true;
     }
   );
+  return false;
 };
