@@ -9,16 +9,16 @@ export default class Request {
   private header: Record<string, string> = {};
   private cookies: Cookie = new Cookie();
   private body: Record<string, string> = {};
-  private multipartBody: Array<Record<string, string>> = [];
+  private multipartBody: Array<Record<string, string | Buffer>> = [];
 
-  constructor(request: string) {
+  constructor(request: Buffer) {
     this.parseToRequest(request);
   }
 
-  private parseToRequest(request: string) {
+  private parseToRequest(request: Buffer) {
     const splitIndex = request.indexOf("\r\n\r\n");
-    const header = request.substring(0, splitIndex);
-    const body = request.substring(splitIndex + 4);
+    const header = request.slice(0, splitIndex).toString();
+    const body = request.slice(splitIndex + 4);
     this.parseHeader(header);
     this.parseBody(body);
   }
@@ -86,7 +86,7 @@ export default class Request {
     return false;
   }
 
-  private parseBody(body: string) {
+  private parseBody(body: Buffer) {
     const contentType = this.getRequestHeader("Content-Type");
     if (contentType?.includes("multipart/form-data;")) {
       const boundary = `--${contentType.substring(contentType.indexOf("=") + 1)}`;
@@ -94,7 +94,8 @@ export default class Request {
       this.multipartBody = parts;
     }
     if (body.length > 0) {
-      this.parseQueryParams(body, this.body);
+      const bodyContent = body.toString();
+      this.parseQueryParams(bodyContent, this.body);
     }
   }
 

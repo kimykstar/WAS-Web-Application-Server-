@@ -42,7 +42,7 @@ const getFileNameAndExtension = (uri: string) => {
   return extension;
 };
 
-export const writeFile = (fileName: string, fileContent: string) => {
+export const writeFile = (fileName: string | Buffer, fileContent: string | Buffer) => {
   fs.writeFile(
     `${STATIC_FILE_PATH}/images/${fileName.slice(1, -1)}`,
     Buffer.from(fileContent),

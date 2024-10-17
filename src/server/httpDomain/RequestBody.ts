@@ -1,9 +1,11 @@
+import { splitBuffer } from "../utils/bufferUtils.ts";
+
 const REGEX = /(\w+(-\w+)*)[:=](\s*([^\r\n;]+))/g;
 
 export default class RequestBody {
-  private bodyContent: Array<Record<string, string>> = [];
+  private bodyContent: Array<Record<string, string | Buffer>> = [];
 
-  parseMultipartBody(boundary: string, body: string) {
+  parseMultipartBody(boundary: string, body: Buffer) {
     const parts = this.splitParts(boundary, body);
 
     const result = this.parseParts(parts.slice(1, -1));
@@ -13,25 +15,25 @@ export default class RequestBody {
     return this.bodyContent;
   }
 
-  private splitParts(boundary: string, body: string) {
-    return body.split(boundary).map((part) => part.trim());
+  private splitParts(boundary: string, body: Buffer) {
+    return splitBuffer(body, boundary);
   }
 
-  private parseParts(parts: Array<string>) {
+  private parseParts(parts: Buffer[]) {
     let match;
     return parts
       .map((part) => {
         const headerEndIndex = part.indexOf("\r\n\r\n");
         return [part.slice(0, headerEndIndex), part.slice(headerEndIndex + 4)];
       })
-      .reduce((reducer: Array<Record<string, string>>, [header, body]) => {
-        const obj: Record<string, string> = {};
-        while ((match = REGEX.exec(header)) !== null) {
+      .reduce((reducer: Array<Record<string, string | Buffer>>, [header, body]) => {
+        const obj: Record<string, string | Buffer> = {};
+        while ((match = REGEX.exec(header.toString())) !== null) {
           const key = match[1];
           const value = match[4].trim();
           obj[key] = value;
         }
-        obj.data = body.replace("\r\n", "");
+        obj.data = body;
         reducer.push(obj);
         return reducer;
       }, []);

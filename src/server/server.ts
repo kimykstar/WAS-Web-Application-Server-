@@ -35,7 +35,7 @@ export const server = net.createServer((socket: any) => {
       const requestText = requestBuffer.toString();
       logger.http(requestText);
       try {
-        const request = new Request(requestText);
+        const request = new Request(requestBuffer);
         const response = await getResponseByUri(request);
         socket.write(response);
         socket.end();
