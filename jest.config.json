@@ -1,0 +1,22 @@
+{
+  "bail": 1,
+  "verbose": true,
+  "projects": [
+    {
+      "displayName": "Dom test",
+      "testEnvironment": "jsdom",
+      "testMatch": ["<rootDir>/src/__test__/Dom/*.test.ts"],
+      "transform": {
+        "^.+\\.(js|ts)?$": ["ts-jest", { "useESM": true }]
+      }
+    },
+    {
+      "preset": "ts-jest",
+      "displayName": "TS test",
+      "testMatch": ["<rootDir>/src/__test__/Server/**/*.test.ts", "<rootDir>/src/__test__/*.test.ts"],
+      "transform": {
+        "^.+\\.(js|ts)?$": ["ts-jest", { "useESM": true }]
+      }
+    }
+  ]
+}

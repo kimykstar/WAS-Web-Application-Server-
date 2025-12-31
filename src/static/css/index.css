@@ -1,0 +1,24 @@
+@import url(variable.css);
+@import url(page.css);
+@import url(header.css);
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--accent-blue);
+  padding: 4rem;
+  border-radius: 0.8rem;
+  height: 14.8.rem;
+  margin-top: 4rem;
+}
+
+.info > p {
+  color: var(--gray-50);
+  font-size: 1.6rem;
+}
+
+.info > h3 {
+  color: var(--gray-50);
+  font-size: 2.4rem;
+}

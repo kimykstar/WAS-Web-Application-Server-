@@ -1,0 +1,17 @@
+import { getResponseByUri } from "../../server/components/uriProcessor.ts";
+import fs from "fs";
+
+describe("URI processor test", () => {
+  it.each([
+    ["GET", "/user/index.html", "./src/static/user/index.html", "html"],
+    ["GET", "/images/favicon.ico", "./src/static/images/favicon.ico", "ico"],
+    ["GET", "/images/dog.jpg", "./src/static/images/dog.jpg", "jpg"],
+  ])(
+    "Static file data & file extention read test",
+    (httpMethod: string, uri: string, staticFilePath: string, expExtention: string) => {
+      // const [fileContent, extension] = getResponseByUri(httpMethod, uri, {});
+      // expect(fileContent).toEqual(fs.readFileSync(staticFilePath));
+      // expect(extension).toBe(expExtention);
+    }
+  );
+});

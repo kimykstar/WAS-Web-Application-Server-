@@ -1,0 +1,36 @@
+.signup-btn {
+  background-color: var(--accent-blue);
+  color: var(--gray-50);
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.8rem 1.6rem;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mypage-btn {
+  background-color: var(--accent-blue);
+  color: var(--gray-50);
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.8rem 1.6rem;
+}
+
+.logout-btn {
+  background-color: var(--accent-blue);
+  color: var(--gray-50);
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.8rem 1.6rem;
+}
+
+.right-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1.6rem;
+}

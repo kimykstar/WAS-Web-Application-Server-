@@ -1,0 +1,25 @@
+import { getStaticFileResponse } from "../../server/components/middlewares/staticFileManager.ts";
+import fs from "fs";
+import Request from "../../server/httpDomain/Request.ts";
+import { createOkResponse } from "../../server/components/helper/responseCreator.ts";
+import { StatusCodes } from "http-status-codes";
+
+describe("Static file manager test", () => {
+  it.each([
+    [
+      new Request(Buffer.from("GET /images/dog.jpg HTTP/1.1\r\n\r\n")),
+      "./src/static/images/dog.jpg",
+    ],
+    [new Request(Buffer.from("GET /css/index.css HTTP/1.1\r\n\r\n")), "./src/static/css/index.css"],
+    [new Request(Buffer.from("GET / HTTP/1.1\r\n\r\n")), "./src/static/index.html"],
+    [
+      new Request(Buffer.from("GET /images/favicon.ico HTTP/1.1\r\n\r\n")),
+      "./src/static/images/favicon.ico",
+    ],
+  ])("/getStaticFile func test", (request: Request, filePath) => {
+    const fileContent = fs.readFileSync(filePath);
+    const fileExtension = filePath.split("/").slice(-1)[0].split(".")[1];
+    const expectResponse = createOkResponse(StatusCodes.OK, fileContent, fileExtension);
+    expect(getStaticFileResponse(request)).toEqual(expectResponse);
+  });
+});

@@ -1,0 +1,45 @@
+@import url(variable.css);
+@import url(page.css);
+@import url(header.css);
+@import url(input.css);
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-box {
+  border-radius: var(--rounded-sm);
+  width: 32rem;
+  height: 6.4rem;
+}
+
+.login-title {
+  text-align: center;
+}
+
+.login-form-btn {
+  background-color: var(--accent-blue);
+  width: 32rem;
+  border: none;
+  color: var(--gray-50);
+  height: 4rem;
+  border-radius: var(--rounded-sm);
+}
+
+.mypage-btn {
+  background-color: var(--accent-blue);
+  color: var(--gray-50);
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.8rem 1.6rem;
+}
+
+.logout-btn {
+  background-color: var(--accent-blue);
+  color: var(--gray-50);
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.8rem 1.6rem;
+}
