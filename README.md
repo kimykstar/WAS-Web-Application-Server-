@@ -1,33 +1,33 @@
-# 주간계획서
+# WAS Framework(Web Application Server by node.js)
 
-## 월(241014)
+## Architecture
+<img width="531" height="309" alt="Image" src="https://github.com/user-attachments/assets/e56ae2a2-cea5-472d-94f3-d4f63ab6336f" />
 
-- [x] 코드 리팩토링
-  - [x] URIProcessor리팩토링
-  - [x] UserController리팩토링
-  - [x] API응답 에러 처리
-  - [x] 그 외 리팩토링
-- [x] 검증(테스트 코드)
-  - [x] 리팩토링 테스트 코드 작성
+## Flow Chart
 
-## 화(241015)
+### 1. Static File Request
 
-- [x] 코드 리뷰 반영
-- [x] 이미지 업로드를 위한 학습
-- [ ] 이미지 업로드 구현
-  - [x] 글쓰기 시 업로드 페이지로 이동
+<img width="416" height="398" alt="Image" src="https://github.com/user-attachments/assets/5f7c9284-26ff-4d12-800c-ee0afda27272" />
 
-## 수(241016)
+### 2. URI Request
 
-- [x] 패킷 나눠서 오는 문제 해결
-- [x] Server에서 업로드 요청 받기
-- [x] 요청받은 업로드 이미지 저장
-- [ ] 클라이언트 요청 시 해당 파일 응답 보내기
+<img width="706" height="394" alt="Image" src="https://github.com/user-attachments/assets/c52020e7-658d-46ea-9d76-61ebd6816de4" />
 
-## 목(241017)
+## Usage
 
-- [x] 이미지 업로드 완성하기
-- [x] 이미지 업로드 요청에 대한 응답 보내기
-- [x] 인코딩에 대해서 학습
-- [x] Oauth2 학습
-- [ ] Oauth2 구현하기
+### Controller
+
+HTTP url에 해당되는 handler 메소드 매핑 및 등록
+
+```TypeScript
+class TestController {
+    
+    @GetMapping("/hello-workd")
+    helloWorld(request: Request) {
+        let body = request.getBodyContent();
+        
+        return body;
+    }
+}
+
+```
